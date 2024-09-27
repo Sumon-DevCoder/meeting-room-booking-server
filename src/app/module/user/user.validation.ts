@@ -24,6 +24,8 @@ export const createUserValidationSchema = z.object({
       })
       .optional(), // Default status, so it's optional
   }),
+  phone: z.number().min(1, "Phone number is required"),
+  address: z.string().min(1, "address is required"),
 });
 
 export const updateUserValidationSchema = z.object({
@@ -36,6 +38,8 @@ export const updateUserValidationSchema = z.object({
         })
         .optional(), // Optional for updates
       email: z.string().email("Invalid email address").trim().optional(), // Optional for updates
+      phone: z.number().min(1, "Phone number is required").optional(),
+      address: z.string().min(1, "address is required").optional(),
       password: z
         .string()
         .min(6, "password must be at least 6 characters")

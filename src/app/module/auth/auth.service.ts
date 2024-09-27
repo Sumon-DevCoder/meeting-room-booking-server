@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import httpStatus from "http-status";
 import AppError from "../../error/AppError";
 import { User } from "../user/user.model";
@@ -71,7 +72,7 @@ const login = async (payload: TLoginUser) => {
   };
 };
 
-export const UserServices = {
+export const AuthServices = {
   register,
   login,
 };

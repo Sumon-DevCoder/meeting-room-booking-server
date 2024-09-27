@@ -6,4 +6,6 @@ export type TUser = {
   password: string;
   status: keyof typeof USER_STATUS;
   role: keyof typeof USER_ROLE;
+  phone: number;
+  address: string;
 };

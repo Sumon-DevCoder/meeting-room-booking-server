@@ -6,7 +6,7 @@ import sendResponse from "../../utiils/sendResponse";
 import config from "../../config";
 
 // register
-const register = catchAsync(async (req: Request, res: Response) => {
+const RegisterUser = catchAsync(async (req: Request, res: Response) => {
   const result = await AuthServices.register(req.body);
 
   sendResponse(res, {
@@ -18,7 +18,7 @@ const register = catchAsync(async (req: Request, res: Response) => {
 });
 
 // login
-const login = catchAsync(async (req: Request, res: Response) => {
+const loginUser = catchAsync(async (req: Request, res: Response) => {
   const { accessToken, refreshToken } = await AuthServices.login(req.body);
 
   // send refresh token into cookie
@@ -35,7 +35,7 @@ const login = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
-export const UserControllers = {
-  register,
-  login,
+export const AuthControllers = {
+  RegisterUser,
+  loginUser,
 };

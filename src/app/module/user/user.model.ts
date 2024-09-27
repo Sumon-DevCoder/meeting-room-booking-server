@@ -33,6 +33,15 @@ const UserSchema = new Schema<TUser>(
       required: [true, "role is required"],
       enum: Object.values(USER_ROLE),
     },
+    phone: {
+      type: "Number",
+      required: [true, "phone number is required"],
+      unique: true,
+    },
+    address: {
+      type: "String",
+      required: [true, "Address is required"],
+    },
   },
   { timestamps: true }
 );
