@@ -1,50 +1,76 @@
-// import httpStatus from "http-status";
-// import { UserServices } from "./room.service";
-// import { Request, Response } from "express";
-// import catchAsync from "../../utiils/catchAsync";
-// import sendResponse from "../../utiils/sendResponse";
+import httpStatus from "http-status";
+import { RoomServices } from "./room.service";
+import { Request, Response } from "express";
+import catchAsync from "../../utiils/catchAsync";
+import sendResponse from "../../utiils/sendResponse";
 
-// // create
-// const createAdmin = catchAsync(async (req: Request, res: Response) => {
-//   const result = await UserServices.creatAdminIntoDB(req.body);
+// create
+const createRoom = catchAsync(async (req: Request, res: Response) => {
+  const result = await RoomServices.createRoomIntoDB(req.body);
 
-//   sendResponse(res, {
-//     statusCode: httpStatus.OK,
-//     success: true,
-//     message: "Admin created successfully",
-//     data: result,
-//   });
-// });
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Room added successfully",
+    data: result,
+  });
+});
 
-// // get all
-// const getAllUsers = catchAsync(async (req: Request, res: Response) => {
-//   const result = await UserServices.getAllUsersFromDB(req.query);
+// get all
+const getAllRooms = catchAsync(async (req: Request, res: Response) => {
+  const result = await RoomServices.getAllRoomFromDB(req.query);
 
-//   sendResponse(res, {
-//     statusCode: httpStatus.OK,
-//     success: true,
-//     message: "Admin Data fetched successfully",
-//     data: result,
-//   });
-// });
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Room retrieved successfully",
+    data: result,
+  });
+});
 
-// // update
-// const updateUser = catchAsync(async (req: Request, res: Response) => {
-//   const result = await UserServices.updateUserIntoDB(
-//     req.params.userId,
-//     req.body
-//   );
+// get single
+const getSingleRooms = catchAsync(async (req: Request, res: Response) => {
+  const result = await RoomServices.getSingleRoomFromDB(req.params.roomId);
 
-//   sendResponse(res, {
-//     statusCode: httpStatus.OK,
-//     success: true,
-//     message: "User updated successfully",
-//     data: result,
-//   });
-// });
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Room retrieved successfully",
+    data: result,
+  });
+});
 
-// export const UserControllers = {
-//   createAdmin,
-//   getAllUsers,
-//   updateUser,
-// };
+// update
+const updateRoom = catchAsync(async (req: Request, res: Response) => {
+  const result = await RoomServices.updateRoomIntoDB(
+    req.params.roomId,
+    req.body
+  );
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Room updated successfully",
+    data: result,
+  });
+});
+
+// delete
+const deleteRoom = catchAsync(async (req: Request, res: Response) => {
+  const result = await RoomServices.deleteRoomIntoDB(req.params.roomId);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Room deleted successfully",
+    data: result,
+  });
+});
+
+export const RoomControllers = {
+  deleteRoom,
+  updateRoom,
+  createRoom,
+  getAllRooms,
+  getSingleRooms,
+};

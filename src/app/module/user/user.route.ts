@@ -7,26 +7,14 @@ import { auth } from "../../middlewares/auth";
 
 const router = Router();
 
-// create admin
-router.post(
-  "/create-admin",
-  validateRequest(userSchemaValidation.createUserValidationSchema),
-  auth(USER_ROLE.ADMIN, USER_ROLE.SUPER_ADMIN),
-  UserControllers.createAdmin
-);
-
-// get all admin
-router.get(
-  "/",
-  auth(USER_ROLE.ADMIN, USER_ROLE.SUPER_ADMIN),
-  UserControllers.getAllUsers
-);
+// get all users
+router.get("/", auth(USER_ROLE.admin), UserControllers.getAllUsers);
 
 // update user
 router.put(
   "/:userId",
   validateRequest(userSchemaValidation.updateUserValidationSchema),
-  auth(USER_ROLE.ADMIN, USER_ROLE.SUPER_ADMIN),
+  auth(USER_ROLE.admin),
   UserControllers.updateUser
 );
 
@@ -34,7 +22,7 @@ router.put(
 router.put(
   "/me",
   validateRequest(userSchemaValidation.updateUserValidationSchema),
-  auth(USER_ROLE.ADMIN, USER_ROLE.SUPER_ADMIN, USER_ROLE.USER),
+  auth(USER_ROLE.admin, USER_ROLE.user),
   UserControllers.updateUser
 );
 

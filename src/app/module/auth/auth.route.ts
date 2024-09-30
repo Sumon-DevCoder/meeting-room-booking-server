@@ -8,7 +8,7 @@ const router = Router();
 
 // register
 router.post(
-  "/register",
+  "/signup",
   validateRequest(userSchemaValidation.createUserValidationSchema),
   AuthControllers.RegisterUser
 );

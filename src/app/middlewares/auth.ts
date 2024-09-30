@@ -8,7 +8,9 @@ import { User } from "../module/user/user.model";
 
 export const auth = (...requiredRoles: (keyof typeof USER_ROLE)[]) => {
   return catchAsync(async (req: Request, res: Response, next: NextFunction) => {
-    const accessToken = req.headers.authorization;
+    const authorizationHeaders = req.headers.authorization;
+
+    const accessToken = authorizationHeaders?.split(" ")[1];
 
     if (!accessToken) {
       throw new AppError(401, "You are not authorized to access this route");
@@ -27,7 +29,7 @@ export const auth = (...requiredRoles: (keyof typeof USER_ROLE)[]) => {
       throw new AppError(401, "User not found");
     }
 
-    if (user.status === USER_STATUS.BLOCKED) {
+    if (user.status === USER_STATUS.blocked) {
       throw new AppError(401, "User is blocked");
     }
 

@@ -12,14 +12,16 @@ const RegisterUser = catchAsync(async (req: Request, res: Response) => {
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: "Registration successful",
+    message: "User registered successfully",
     data: result,
   });
 });
 
 // login
 const loginUser = catchAsync(async (req: Request, res: Response) => {
-  const { accessToken, refreshToken } = await AuthServices.login(req.body);
+  const { userInfo, accessToken, refreshToken } = await AuthServices.login(
+    req.body
+  );
 
   // send refresh token into cookie
   res.cookie("refreshToken", refreshToken, {
@@ -30,8 +32,9 @@ const loginUser = catchAsync(async (req: Request, res: Response) => {
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: "Login successfully",
-    data: { accessToken },
+    message: "User logged in successfully",
+    token: accessToken,
+    data: userInfo,
   });
 });
 

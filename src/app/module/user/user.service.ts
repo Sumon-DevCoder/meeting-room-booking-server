@@ -5,18 +5,6 @@ import QueryBuilder from "../../builder/QueryBuilder";
 import { userSearchableFields } from "./user.constant";
 import { User } from "./user.model";
 
-// create
-const creatAdminIntoDB = async (payload: TUser) => {
-  // user checking
-  const isUserExists = await User.findOne({ email: payload.email });
-  if (isUserExists) {
-    throw new AppError(httpStatus.CONFLICT, "Already registered");
-  }
-
-  const result = await User.create(payload);
-  return result;
-};
-
 // get all
 const getAllUsersFromDB = async (query: Record<string, unknown>) => {
   // queryBuilder
@@ -56,7 +44,6 @@ const updateUserIntoDB = async (_id: string, payload: Partial<TUser>) => {
 };
 
 export const UserServices = {
-  creatAdminIntoDB,
   updateUserIntoDB,
   getAllUsersFromDB,
 };

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import httpStatus from "http-status";
 import AppError from "../../error/AppError";
@@ -7,7 +8,6 @@ import { TLoginUser } from "./auth.interface";
 import { isPasswordMatched } from "./auth.utils";
 import jwt from "jsonwebtoken";
 import config from "../../config";
-import { USER_ROLE } from "./auth.constant";
 
 // register
 const register = async (payload: TUser): Promise<any> => {
@@ -16,9 +16,6 @@ const register = async (payload: TUser): Promise<any> => {
   if (user) {
     throw new AppError(httpStatus.CONFLICT, "Already registered");
   }
-
-  // set user role
-  payload.role = USER_ROLE.USER;
 
   // create user
   const newUser = await User.create(payload);
@@ -34,7 +31,7 @@ const login = async (payload: TLoginUser) => {
   }
 
   // checking user status
-  if (user.status === "BLOCKED") {
+  if (user.status === "blocked") {
     throw new Error("User is Blocked");
   }
 
@@ -66,9 +63,12 @@ const login = async (payload: TLoginUser) => {
     }
   );
 
+  const { password, status, ...userInfo } = user.toObject();
+
   return {
     accessToken,
     refreshToken,
+    userInfo,
   };
 };
 

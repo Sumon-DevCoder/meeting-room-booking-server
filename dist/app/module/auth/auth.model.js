@@ -1,6 +1,6 @@
+"use strict";
 // import { model, Schema } from "mongoose";
 // import { TLoginUser } from "./auth.interface";
-
 // export const loginUserSchema: Schema = new Schema<TLoginUser>(
 //   {
 //     email: {
@@ -21,5 +21,4 @@
 //   },
 //   { timestamps: true }
 // );
-
 // export const Login = model<TLoginUser>("Login", loginUserSchema);

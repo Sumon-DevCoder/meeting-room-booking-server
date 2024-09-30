@@ -1,6 +1,9 @@
+/* eslint-disable @typescript-eslint/no-this-alias */
 import { model, Schema } from "mongoose";
 import { TUser } from "./user.interface";
 import { USER_ROLE, USER_STATUS } from "./user.constant";
+import bcrypt from "bcrypt";
+import config from "../../config";
 
 // create user schema
 const UserSchema = new Schema<TUser>(
@@ -26,7 +29,7 @@ const UserSchema = new Schema<TUser>(
       type: "String",
       required: [true, "status is required"],
       enum: Object.values(USER_STATUS),
-      default: USER_STATUS.ACTIVE,
+      default: USER_STATUS.active,
     },
     role: {
       type: "String",
@@ -34,7 +37,7 @@ const UserSchema = new Schema<TUser>(
       enum: Object.values(USER_ROLE),
     },
     phone: {
-      type: "Number",
+      type: "String",
       required: [true, "phone number is required"],
       unique: true,
     },
@@ -45,6 +48,24 @@ const UserSchema = new Schema<TUser>(
   },
   { timestamps: true }
 );
+
+// setup password hashing
+UserSchema.pre("save", async function (next) {
+  const user = this;
+
+  user.password = await bcrypt.hash(
+    user.password as string,
+    Number(config.bcrypt_salt_rounds)
+  );
+
+  next();
+});
+
+UserSchema.post("save", async function (doc, next) {
+  doc.password = "";
+
+  next();
+});
 
 // create and export model schema
 export const User = model<TUser>("User", UserSchema);

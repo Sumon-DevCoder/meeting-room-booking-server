@@ -1,41 +1,35 @@
 import { Router } from "express";
 import validateRequest from "../../middlewares/validateRequest";
-import { userSchemaValidation } from "./user.validation";
-import { UserControllers } from "./user.controller";
-import { USER_ROLE } from "./room.constant";
+import { roomSchemaValidation } from "./room.validation";
 import { auth } from "../../middlewares/auth";
+import { USER_ROLE } from "../user/user.constant";
+import { RoomControllers } from "./room.controller";
 
 const router = Router();
 
-// create admin
+// create
 router.post(
-  "/create-admin",
-  validateRequest(userSchemaValidation.createUserValidationSchema),
-  auth(USER_ROLE.ADMIN, USER_ROLE.SUPER_ADMIN),
-  UserControllers.createAdmin
-);
-
-// get all admin
-router.get(
   "/",
-  auth(USER_ROLE.ADMIN, USER_ROLE.SUPER_ADMIN),
-  UserControllers.getAllUsers
+  validateRequest(roomSchemaValidation.createRoomSchemaValidation),
+  auth(USER_ROLE.admin),
+  RoomControllers.createRoom
 );
 
-// update user
+// get all
+router.get("/", RoomControllers.getAllRooms);
+
+// get single
+router.get("/:roomId", RoomControllers.getSingleRooms);
+
+// update
 router.put(
-  "/:userId",
-  validateRequest(userSchemaValidation.updateUserValidationSchema),
-  auth(USER_ROLE.ADMIN, USER_ROLE.SUPER_ADMIN),
-  UserControllers.updateUser
+  "/:roomId",
+  validateRequest(roomSchemaValidation.updateRoomSchemaValidation),
+  auth(USER_ROLE.admin),
+  RoomControllers.updateRoom
 );
 
-// update only user own profile
-router.put(
-  "/me",
-  validateRequest(userSchemaValidation.updateUserValidationSchema),
-  auth(USER_ROLE.ADMIN, USER_ROLE.SUPER_ADMIN, USER_ROLE.USER),
-  UserControllers.updateUser
-);
+// delete
+router.delete("/:roomId", auth(USER_ROLE.admin), RoomControllers.deleteRoom);
 
-export const UserRoutes = router;
+export const RoomRoutes = router;
