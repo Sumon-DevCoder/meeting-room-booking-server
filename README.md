@@ -4,7 +4,7 @@ A web application for managing room bookings in co-working spaces, featuring use
 
 ## **Live Demo**
 
-[Live Lin](https://meeting-room-booking-server-zeta.vercel.app/)
+[Live Link](https://meeting-room-booking-server-zeta.vercel.app/)
 
 ## **Table of Contents**
 
@@ -13,9 +13,6 @@ A web application for managing room bookings in co-working spaces, featuring use
 - [Technology Stack](#technology-stack)
 - [Installation](#installation)
 - [Usage](#usage)
-- [API Documentation](#api-documentation)
-- [Contributing](#contributing)
-- [License](#license)
 
 ## **Project Overview**
 
