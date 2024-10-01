@@ -4,22 +4,29 @@ import { BookingStatus, TBooking } from "./booking.interface";
 import { Booking } from "./booking.model";
 import QueryBuilder from "../../builder/QueryBuilder";
 import { bookingSearchableFields } from "./booking.constant";
+import { Room } from "../room/room.model";
 
 // create
 const createBookingIntoDB = async (payload: TBooking) => {
-  // Booking checking
-  const room = await Booking.findOne({
+  // get room data base on payload
+  const room = await Room.findById(payload.room);
+  const roomPricePerSlot = room?.pricePerSlot;
+  const totalSlot = payload?.slots?.length;
+
+  // set total price of room slots
+  const totalAmount = (roomPricePerSlot as number) * totalSlot;
+  payload.totalAmount = totalAmount;
+
+  // find Booking is Exists
+  const BookingIsExists = await Booking.findOne({
+    date: payload.date,
     room: payload.room,
+    slots: { $in: payload.slots },
+    user: payload.user,
   });
 
-  console.log(room);
-
-  //   const totalAmount = room.pricePerSlot;
-
-  //   console.log("totalAmount", totalAmount);
-
-  if (room?.user === payload.user && room.room === payload.room) {
-    throw new AppError(httpStatus.CONFLICT, "Already booked this room");
+  if (BookingIsExists) {
+    throw new AppError(httpStatus.CONFLICT, "Already booked");
   }
 
   const result = await Booking.create(payload);
