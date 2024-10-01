@@ -1,5 +1,6 @@
 import mongoose, { Schema } from "mongoose";
 import { TRoom } from "./room.interface";
+import { queryMiddlewareChecking } from "../../utiils/queryMiddlewareChecking";
 
 const RoomSchema: Schema = new Schema<TRoom>({
   name: {
@@ -36,20 +37,6 @@ const RoomSchema: Schema = new Schema<TRoom>({
   },
 });
 
-// Query Middleware
-RoomSchema.pre("find", function (next) {
-  this.find({ isDeleted: { $ne: true } });
-  next();
-});
-
-RoomSchema.pre("findOne", function (next) {
-  this.find({ isDeleted: { $ne: true } });
-  next();
-});
-
-RoomSchema.pre("aggregate", function (next) {
-  this.pipeline().unshift({ $match: { isDeleted: { $ne: true } } });
-  next();
-});
+queryMiddlewareChecking(RoomSchema, "isDeleted", true);
 
 export const Room = mongoose.model<TRoom>("Room", RoomSchema);

@@ -1,6 +1,6 @@
 import httpStatus from "http-status";
 import AppError from "../../error/AppError";
-import { TBooking } from "./booking.interface";
+import { BookingStatus, TBooking } from "./booking.interface";
 import { Booking } from "./booking.model";
 import QueryBuilder from "../../builder/QueryBuilder";
 import { bookingSearchableFields } from "./booking.constant";
@@ -29,7 +29,10 @@ const createBookingIntoDB = async (payload: TBooking) => {
 // get all
 const getAllBookingFromDB = async (query: Record<string, unknown>) => {
   // queryBuilder
-  const BookingQuery = new QueryBuilder(Booking.find(), query)
+  const BookingQuery = new QueryBuilder(
+    Booking.find().populate("slots").populate("room").populate("user"),
+    query
+  )
     .search(bookingSearchableFields)
     .filter()
     .sort()
@@ -75,7 +78,7 @@ const updateBookingIntoDB = async (_id: string) => {
 
   const result = await Booking.findByIdAndUpdate(
     _id,
-    { isConfirmed: confirm },
+    { isConfirmed: BookingStatus.confirmed },
     {
       new: true,
     }

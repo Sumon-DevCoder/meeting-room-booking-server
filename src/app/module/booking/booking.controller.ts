@@ -42,10 +42,8 @@ const getAllBookings = catchAsync(async (req: Request, res: Response) => {
 
 // update
 const updateBooking = catchAsync(async (req: Request, res: Response) => {
-  console.log("controller ", req.params.BookingId);
-
   const result = await BookingServices.updateBookingIntoDB(
-    req.params.BookingId
+    req.params.bookingId
   );
 
   sendResponse(res, {
@@ -59,7 +57,7 @@ const updateBooking = catchAsync(async (req: Request, res: Response) => {
 // delete
 const deleteBooking = catchAsync(async (req: Request, res: Response) => {
   const result = await BookingServices.deleteBookingIntoDB(
-    req.params.BookingId
+    req.params.bookingId
   );
 
   sendResponse(res, {

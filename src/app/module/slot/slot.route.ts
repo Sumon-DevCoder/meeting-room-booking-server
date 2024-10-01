@@ -15,8 +15,8 @@ router.post(
   SlotControllers.createSlot
 );
 
-// // get all
-// router.get("/", RoomControllers.getAllRooms);
+// get all
+router.get("/availability", SlotControllers.getAllSlots);
 
 // // get single
 // router.get("/:roomId", RoomControllers.getSingleRooms);

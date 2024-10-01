@@ -1,5 +1,6 @@
 import { Schema, model } from "mongoose";
-import { TBooking } from "./booking.interface";
+import { BookingStatus, TBooking } from "./booking.interface";
+import { queryMiddlewareChecking } from "../../utiils/queryMiddlewareChecking";
 
 const bookingSchema: Schema = new Schema<TBooking>(
   {
@@ -26,12 +27,12 @@ const bookingSchema: Schema = new Schema<TBooking>(
     },
     totalAmount: {
       type: Number,
-      //   required: true,
+      required: true,
     },
     isConfirmed: {
       type: String,
-      enum: ["confirmed", "unconfirmed", "canceled"], // Ensuring valid values
-      default: "unconfirmed", // Default status
+      enum: BookingStatus,
+      default: BookingStatus.unconfirmed, // Default status
     },
     isDeleted: {
       type: Boolean,
@@ -42,6 +43,8 @@ const bookingSchema: Schema = new Schema<TBooking>(
     timestamps: true, // Automatically add `createdAt` and `updatedAt` fields
   }
 );
+
+queryMiddlewareChecking(bookingSchema, "isDeleted", true);
 
 // Create and export the Booking model
 export const Booking = model<TBooking>("Booking", bookingSchema);

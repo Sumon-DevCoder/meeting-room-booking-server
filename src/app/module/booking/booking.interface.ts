@@ -1,5 +1,11 @@
 import { Types } from "mongoose";
 
+export enum BookingStatus {
+  confirmed = "confirmed",
+  unconfirmed = "unconfirmed",
+  canceled = "canceled",
+}
+
 export type TBooking = {
   // user: TUser | string; // reference data
   //   slots: (TSlot | string)[]; // reference data
@@ -8,6 +14,6 @@ export type TBooking = {
   room: Types.ObjectId; // ref
   user: Types.ObjectId; // ref
   totalAmount?: number;
-  isConfirmed: "confirmed" | "unconfirmed" | "canceled";
+  isConfirmed: BookingStatus;
   isDeleted: boolean;
 };
