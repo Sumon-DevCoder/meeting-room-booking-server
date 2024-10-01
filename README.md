@@ -82,3 +82,14 @@ Ensure you have the following installed:
    ```bash
    npm run dev
    ```
+
+## Usage
+
+- **For Admins:**
+
+  - Access the admin dashboard to manage rooms and time slots.
+  - Create, update, or delete rooms and their respective slots.
+
+- **For Users:**
+  - Browse the available meeting rooms and select desired time slots for booking.
+  - Fill in the booking form and receive confirmation of your reservation.
