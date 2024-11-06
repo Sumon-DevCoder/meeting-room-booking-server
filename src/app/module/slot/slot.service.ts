@@ -71,11 +71,11 @@ const getAllSlotFromDB = async (query: Record<string, unknown>) => {
 
 // getSlotByRoomFromDB
 const getSlotByRoomFromDB = async (_id: string) => {
-  const result = await Slot.findOne({ roomId: _id });
+  const result = await Slot.find({ roomId: _id });
 
   // checking data
   if (result === null) {
-    throw new AppError(httpStatus.NOT_FOUND, "Slots not available!");
+    throw new AppError(httpStatus.NOT_FOUND, "Slots not available");
   }
 
   return result;

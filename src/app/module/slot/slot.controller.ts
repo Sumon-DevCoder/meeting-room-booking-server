@@ -30,7 +30,7 @@ const getAllSlots = catchAsync(async (req: Request, res: Response) => {
 
 // get single
 const getSlotsByRoom = catchAsync(async (req: Request, res: Response) => {
-  const result = await SlotServices.getSlotByRoomFromDB(req.params.SlotId);
+  const result = await SlotServices.getSlotByRoomFromDB(req.params.roomId);
 
   sendResponse(res, {
     statusCode: httpStatus.OK,

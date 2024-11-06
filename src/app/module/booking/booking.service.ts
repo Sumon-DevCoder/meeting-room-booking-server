@@ -1,10 +1,11 @@
 import httpStatus from "http-status";
 import AppError from "../../error/AppError";
-import { BookingStatus, TBooking } from "./booking.interface";
+import { TBooking } from "./booking.interface";
 import { Booking } from "./booking.model";
 import QueryBuilder from "../../builder/QueryBuilder";
 import { bookingSearchableFields } from "./booking.constant";
 import { Room } from "../room/room.model";
+import { UpdateQuery } from "mongoose";
 
 // create
 const createBookingIntoDB = async (payload: TBooking) => {
@@ -60,6 +61,18 @@ const getAllBookingFromDB = async (query: Record<string, unknown>) => {
   };
 };
 
+// get booking by user
+const getBookingByUserFromDB = async (email: string) => {
+  const result = await Booking.find({ email: email });
+
+  // checking data
+  if (result === null) {
+    throw new AppError(httpStatus.NOT_FOUND, "Bookings not available!");
+  }
+
+  return result;
+};
+
 // // get single
 // const getSingleBookingFromDB = async (_id: string) => {
 //   const result = await Booking.findById({ _id });
@@ -73,7 +86,10 @@ const getAllBookingFromDB = async (query: Record<string, unknown>) => {
 // };
 
 // update
-const updateBookingIntoDB = async (_id: string) => {
+const updateBookingIntoDB = async (
+  _id: string,
+  payload: UpdateQuery<TBooking> | undefined
+) => {
   // Booking checking
   const isBookingExists = await Booking.findById({ _id });
   if (!isBookingExists) {
@@ -83,13 +99,9 @@ const updateBookingIntoDB = async (_id: string) => {
   //   console.log("id", _id);
   //   console.log("hitting server");
 
-  const result = await Booking.findByIdAndUpdate(
-    _id,
-    { isConfirmed: BookingStatus.confirmed },
-    {
-      new: true,
-    }
-  );
+  const result = await Booking.findByIdAndUpdate(_id, payload, {
+    new: true,
+  });
   return result;
 };
 
@@ -115,6 +127,7 @@ export const BookingServices = {
   createBookingIntoDB,
   //   getSingleBookingFromDB,
   getAllBookingFromDB,
+  getBookingByUserFromDB,
   updateBookingIntoDB,
   deleteBookingIntoDB,
 };

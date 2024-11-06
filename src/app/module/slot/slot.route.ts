@@ -24,7 +24,7 @@ router.get(
 
 // get slot by room
 router.get(
-  "/:roomId",
+  "/room/:roomId",
   auth(USER_ROLE.user, USER_ROLE.admin),
   SlotControllers.getSlotsByRoom
 );

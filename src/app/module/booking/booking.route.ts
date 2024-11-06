@@ -18,6 +18,13 @@ router.post(
 // get all
 router.get("/", auth(USER_ROLE.admin), BookingControllers.getAllBookings);
 
+// get booking by user
+router.get(
+  "/:email",
+  auth(USER_ROLE.admin, USER_ROLE.user),
+  BookingControllers.getBookingByUser
+);
+
 // update
 router.put(
   "/:bookingId",
