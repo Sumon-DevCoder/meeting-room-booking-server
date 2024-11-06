@@ -56,20 +56,12 @@ const getAllBookingFromDB = (query) => __awaiter(void 0, void 0, void 0, functio
     const result = yield BookingQuery.modelQuery;
     // checking data
     if (result.length === 0) {
-        throw new AppError_1.default(http_status_1.default.NOT_FOUND, "Bookings not available!");
+        throw new AppError_1.default(http_status_1.default.NOT_FOUND, "Bookings not found!");
     }
     return {
         meta,
         result,
     };
-});
-// get all
-const getBookingByUserFromDB = (email) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield booking_model_1.Booking.find({ email })
-        .populate("room")
-        .populate("user")
-        .populate("slots");
-    return result;
 });
 // // get single
 // const getSingleBookingFromDB = async (_id: string) => {
@@ -108,7 +100,7 @@ const deleteBookingIntoDB = (_id) => __awaiter(void 0, void 0, void 0, function*
 });
 exports.BookingServices = {
     createBookingIntoDB,
-    getBookingByUserFromDB,
+    //   getSingleBookingFromDB,
     getAllBookingFromDB,
     updateBookingIntoDB,
     deleteBookingIntoDB,

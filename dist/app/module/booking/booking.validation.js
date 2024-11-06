@@ -28,7 +28,6 @@ exports.createBookingValidationSchema = zod_1.z.object({
             required_error: "Confirmation status is required",
         })
             .default("unconfirmed"),
-        email: zod_1.z.string().optional(),
         isDeleted: zod_1.z
             .boolean({
             required_error: "isDeleted flag is required",

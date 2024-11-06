@@ -14,13 +14,11 @@ const router = (0, express_1.Router)();
 // create
 router.post("/", (0, validateRequest_1.default)(slot_validation_1.slotValidationSchema.createSlotSchemaValidation), (0, auth_1.auth)(user_constant_1.USER_ROLE.admin), slot_controller_1.SlotControllers.createSlot);
 // get all
-router.get("/availability", slot_controller_1.SlotControllers.getAllSlots);
-// get single slots
-router.get("/:slotsId", slot_controller_1.SlotControllers.getSingleSlotsById);
-// getSlotByRoom;
-router.get("/room/:roomId", slot_controller_1.SlotControllers.getSlotByRoom);
+router.get("/availability", (0, auth_1.auth)(user_constant_1.USER_ROLE.user, user_constant_1.USER_ROLE.admin), slot_controller_1.SlotControllers.getAllSlots);
+// get slot by room
+router.get("/:roomId", (0, auth_1.auth)(user_constant_1.USER_ROLE.user, user_constant_1.USER_ROLE.admin), slot_controller_1.SlotControllers.getSlotsByRoom);
 // update
-router.put("/:id", (0, validateRequest_1.default)(slot_validation_1.slotValidationSchema.updateSlotSchemaValidation), (0, auth_1.auth)(user_constant_1.USER_ROLE.admin), slot_controller_1.SlotControllers.updateSlot);
+router.put("/:roomId", (0, validateRequest_1.default)(slot_validation_1.slotValidationSchema.updateSlotSchemaValidation), (0, auth_1.auth)(user_constant_1.USER_ROLE.admin), slot_controller_1.SlotControllers.updateSlot);
 // delete
-router.delete("/:slotId", (0, auth_1.auth)(user_constant_1.USER_ROLE.admin), slot_controller_1.SlotControllers.deleteSlot);
+router.delete("/:roomId", (0, auth_1.auth)(user_constant_1.USER_ROLE.admin), slot_controller_1.SlotControllers.deleteSlot);
 exports.slotRoutes = router;

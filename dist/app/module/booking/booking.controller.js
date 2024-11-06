@@ -37,16 +37,6 @@ const getAllBookings = (0, catchAsync_1.default)((req, res) => __awaiter(void 0,
         data: result,
     });
 }));
-const getBookingByUser = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { userEmail } = req.params;
-    const result = yield booking_service_1.BookingServices.getBookingByUserFromDB(userEmail);
-    (0, sendResponse_1.default)(res, {
-        statusCode: http_status_1.default.OK,
-        success: true,
-        message: "Booking retrieved successfully",
-        data: result,
-    });
-}));
 // // get single
 // const getSingleBookings = catchAsync(async (req: Request, res: Response) => {
 //   const result = await BookingServices.getSingleBookingFromDB(req.params.BookingId);
@@ -59,8 +49,7 @@ const getBookingByUser = (0, catchAsync_1.default)((req, res) => __awaiter(void 
 // });
 // update
 const updateBooking = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { bookingId } = req.params;
-    const result = yield booking_service_1.BookingServices.updateBookingIntoDB(bookingId);
+    const result = yield booking_service_1.BookingServices.updateBookingIntoDB(req.params.bookingId);
     (0, sendResponse_1.default)(res, {
         statusCode: http_status_1.default.OK,
         success: true,
@@ -83,5 +72,5 @@ exports.BookingControllers = {
     deleteBooking,
     updateBooking,
     getAllBookings,
-    getBookingByUser,
+    //   getSingleBookings,
 };

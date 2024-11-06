@@ -48,10 +48,6 @@ const UserSchema = new mongoose_1.Schema({
         required: [true, "role is required"],
         enum: Object.values(user_constant_1.USER_ROLE),
     },
-    img: {
-        type: "String",
-        required: [true, "img is required"],
-    },
     phone: {
         type: "String",
         required: [true, "phone number is required"],

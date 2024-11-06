@@ -31,9 +31,6 @@ const bookingSchema = new mongoose_1.Schema({
         required: true,
         default: 0,
     },
-    email: {
-        type: String,
-    },
     isConfirmed: {
         type: String,
         enum: booking_interface_1.BookingStatus,

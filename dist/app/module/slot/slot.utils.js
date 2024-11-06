@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.slotSearchableFields = exports.minutesToTime = exports.timeToMin = exports.slotDuration = void 0;
+exports.minutesToTime = exports.timeToMin = exports.slotDuration = void 0;
 exports.slotDuration = 60;
 // convert time to min
 const timeToMin = (time) => {
@@ -17,4 +17,3 @@ const minutesToTime = (minutes) => {
     return `${hours}:${mins}`;
 };
 exports.minutesToTime = minutesToTime;
-exports.slotSearchableFields = ["date", "room"];

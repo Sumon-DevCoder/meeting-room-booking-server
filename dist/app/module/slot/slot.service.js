@@ -25,7 +25,7 @@ const createSlotIntoDB = (payload) => __awaiter(void 0, void 0, void 0, function
     if (isSlotExists) {
         throw new AppError_1.default(http_status_1.default.CONFLICT, "Slot already exists");
     }
-    const { roomId, date, startTime, endTime, roomName, roomNo } = payload;
+    const { roomId, date, startTime, endTime, isBooked } = yield slot_model_1.Slot.create(payload);
     //  now setup slot duration create functionality
     // convert time to min
     const startInMins = (0, slot_utils_1.timeToMin)(startTime);
@@ -44,19 +44,15 @@ const createSlotIntoDB = (payload) => __awaiter(void 0, void 0, void 0, function
             date,
             startTime: (0, slot_utils_1.minutesToTime)(slotStart),
             endTime: (0, slot_utils_1.minutesToTime)(slotEnd),
-            isBooked: false,
-            roomName,
-            roomNo,
+            isBooked,
         });
     }
-    const result = yield slot_model_1.Slot.create(slots);
-    return result;
+    return slots;
 });
 // get all
 const getAllSlotFromDB = (query) => __awaiter(void 0, void 0, void 0, function* () {
     // queryBuilder
     const slotQuery = new QueryBuilder_1.default(slot_model_1.Slot.find().populate("roomId"), query)
-        .search(slot_utils_1.slotSearchableFields)
         .filter()
         .sort()
         .paginate()
@@ -72,22 +68,12 @@ const getAllSlotFromDB = (query) => __awaiter(void 0, void 0, void 0, function* 
         result,
     };
 });
-// get single slots
-const getSingleSlotsByIdFromDB = (id) => __awaiter(void 0, void 0, void 0, function* () {
-    // console.log("ddd", slotsId);
-    const result = yield slot_model_1.Slot.findById(id);
+// getSlotByRoomFromDB
+const getSlotByRoomFromDB = (_id) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield slot_model_1.Slot.findOne({ roomId: _id });
     // checking data
     if (result === null) {
         throw new AppError_1.default(http_status_1.default.NOT_FOUND, "Slots not available!");
-    }
-    return result;
-});
-// get single
-const getSlotByRoomFromDB = (roomId) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield slot_model_1.Slot.find({ roomId });
-    // checking data
-    if (result === null) {
-        throw new AppError_1.default(http_status_1.default.NOT_FOUND, "Slots not found!");
     }
     return result;
 });
@@ -96,21 +82,21 @@ const updateSlotIntoDB = (_id, payload) => __awaiter(void 0, void 0, void 0, fun
     // slot checking
     const isSlotExists = yield slot_model_1.Slot.findById({ _id });
     if (!isSlotExists) {
-        throw new AppError_1.default(http_status_1.default.CONFLICT, "Slot not found!");
+        throw new AppError_1.default(http_status_1.default.CONFLICT, "Slot not available!");
     }
     const result = yield slot_model_1.Slot.findByIdAndUpdate({ _id }, payload, {
         new: true,
     });
     return result;
 });
-// update
-const deleteSlotIntoDB = (id) => __awaiter(void 0, void 0, void 0, function* () {
+// delete
+const deleteSlotIntoDB = (_id) => __awaiter(void 0, void 0, void 0, function* () {
     // slot checking
-    const slot = yield slot_model_1.Slot.findById(id);
-    if (!slot) {
-        throw new AppError_1.default(http_status_1.default.CONFLICT, "Slot not found!");
+    const SlotData = yield slot_model_1.Slot.findById({ _id });
+    if (!SlotData) {
+        throw new AppError_1.default(http_status_1.default.CONFLICT, "Slot not available!");
     }
-    const result = yield slot_model_1.Slot.findByIdAndUpdate(id, { isDeleted: true }, {
+    const result = yield slot_model_1.Slot.findByIdAndUpdate(_id, { isDeleted: true }, {
         new: true,
     });
     return result;
@@ -121,5 +107,4 @@ exports.SlotServices = {
     getAllSlotFromDB,
     updateSlotIntoDB,
     deleteSlotIntoDB,
-    getSingleSlotsByIdFromDB,
 };

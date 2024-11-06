@@ -16,20 +16,28 @@ router.post(
 );
 
 // get all
-router.get("/availability", SlotControllers.getAllSlots);
+router.get(
+  "/availability",
+  auth(USER_ROLE.user, USER_ROLE.admin),
+  SlotControllers.getAllSlots
+);
 
-// // get single
-// router.get("/:roomId", RoomControllers.getSingleRooms);
+// get slot by room
+router.get(
+  "/:roomId",
+  auth(USER_ROLE.user, USER_ROLE.admin),
+  SlotControllers.getSlotsByRoom
+);
 
-// // update
-// router.put(
-//   "/:roomId",
-//   validateRequest(roomSchemaValidation.updateRoomSchemaValidation),
-//   auth(USER_ROLE.admin),
-//   RoomControllers.updateRoom
-// );
+// update
+router.put(
+  "/:roomId",
+  validateRequest(slotValidationSchema.updateSlotSchemaValidation),
+  auth(USER_ROLE.admin),
+  SlotControllers.updateSlot
+);
 
 // delete
-// router.delete("/:roomId", auth(USER_ROLE.admin), RoomControllers.deleteRoom);
+router.delete("/:roomId", auth(USER_ROLE.admin), SlotControllers.deleteSlot);
 
 export const slotRoutes = router;

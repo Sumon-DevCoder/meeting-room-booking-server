@@ -37,21 +37,9 @@ const getAllSlots = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, vo
         data: result,
     });
 }));
-// get single slots by id
-const getSingleSlotsById = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { slotsId } = req.params;
-    const result = yield slot_service_1.SlotServices.getSingleSlotsByIdFromDB(slotsId);
-    (0, sendResponse_1.default)(res, {
-        statusCode: http_status_1.default.OK,
-        success: true,
-        message: "Slot retrieved successfully",
-        data: result,
-    });
-}));
 // get single
-const getSlotByRoom = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { roomId } = req.params;
-    const result = yield slot_service_1.SlotServices.getSlotByRoomFromDB(roomId);
+const getSlotsByRoom = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield slot_service_1.SlotServices.getSlotByRoomFromDB(req.params.SlotId);
     (0, sendResponse_1.default)(res, {
         statusCode: http_status_1.default.OK,
         success: true,
@@ -61,8 +49,7 @@ const getSlotByRoom = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, 
 }));
 // update
 const updateSlot = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { id } = req.params;
-    const result = yield slot_service_1.SlotServices.updateSlotIntoDB(id, req.body);
+    const result = yield slot_service_1.SlotServices.updateSlotIntoDB(req.params.slotId, req.body);
     (0, sendResponse_1.default)(res, {
         statusCode: http_status_1.default.OK,
         success: true,
@@ -72,8 +59,7 @@ const updateSlot = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, voi
 }));
 // delete
 const deleteSlot = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { slotId } = req.params;
-    const result = yield slot_service_1.SlotServices.deleteSlotIntoDB(slotId);
+    const result = yield slot_service_1.SlotServices.deleteSlotIntoDB(req.params.slotId);
     (0, sendResponse_1.default)(res, {
         statusCode: http_status_1.default.OK,
         success: true,
@@ -86,6 +72,5 @@ exports.SlotControllers = {
     deleteSlot,
     updateSlot,
     getAllSlots,
-    getSlotByRoom,
-    getSingleSlotsById,
+    getSlotsByRoom,
 };

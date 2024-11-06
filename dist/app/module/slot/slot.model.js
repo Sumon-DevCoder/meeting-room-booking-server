@@ -48,16 +48,6 @@ const SlotSchema = new mongoose_1.Schema({
         type: String,
         required: true,
     },
-    isDeleted: {
-        type: Boolean,
-        default: false,
-    },
-    roomName: {
-        type: String,
-    },
-    roomNo: {
-        type: Number,
-    },
     endTime: {
         type: String,
         required: true,
@@ -69,6 +59,6 @@ const SlotSchema = new mongoose_1.Schema({
 }, {
     timestamps: true, // Automatically add createdAt and updatedAt fields
 });
-(0, queryMiddlewareChecking_1.queryMiddlewareChecking)(SlotSchema, "isDeleted", true);
+(0, queryMiddlewareChecking_1.queryMiddlewareChecking)(SlotSchema, "isBooked", true);
 // Create and export the Slot model
 exports.Slot = mongoose_1.default.model("Slot", SlotSchema);

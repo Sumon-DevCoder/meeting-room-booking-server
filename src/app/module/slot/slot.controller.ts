@@ -28,49 +28,49 @@ const getAllSlots = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
-// // get single
-// const getSingleSlots = catchAsync(async (req: Request, res: Response) => {
-//   const result = await SlotServices.getSingleSlotFromDB(req.params.SlotId);
+// get single
+const getSlotsByRoom = catchAsync(async (req: Request, res: Response) => {
+  const result = await SlotServices.getSlotByRoomFromDB(req.params.SlotId);
 
-//   sendResponse(res, {
-//     statusCode: httpStatus.OK,
-//     success: true,
-//     message: "Slot retrieved successfully",
-//     data: result,
-//   });
-// });
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Slot retrieved successfully",
+    data: result,
+  });
+});
 
-// // update
-// const updateSlot = catchAsync(async (req: Request, res: Response) => {
-//   const result = await SlotServices.updateSlotIntoDB(
-//     req.params.SlotId,
-//     req.body
-//   );
+// update
+const updateSlot = catchAsync(async (req: Request, res: Response) => {
+  const result = await SlotServices.updateSlotIntoDB(
+    req.params.slotId,
+    req.body
+  );
 
-//   sendResponse(res, {
-//     statusCode: httpStatus.OK,
-//     success: true,
-//     message: "Slot updated successfully",
-//     data: result,
-//   });
-// });
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Slot updated successfully",
+    data: result,
+  });
+});
 
-// // delete
-// const deleteSlot = catchAsync(async (req: Request, res: Response) => {
-//   const result = await SlotServices.deleteSlotIntoDB(req.params.SlotId);
+// delete
+const deleteSlot = catchAsync(async (req: Request, res: Response) => {
+  const result = await SlotServices.deleteSlotIntoDB(req.params.slotId);
 
-//   sendResponse(res, {
-//     statusCode: httpStatus.OK,
-//     success: true,
-//     message: "Slot deleted successfully",
-//     data: result,
-//   });
-// });
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Slot deleted successfully",
+    data: result,
+  });
+});
 
 export const SlotControllers = {
   createSlot,
-  //   deleteSlot,
-  //   updateSlot,
+  deleteSlot,
+  updateSlot,
   getAllSlots,
-  //   getSingleSlots,
+  getSlotsByRoom,
 };

@@ -14,5 +14,3 @@ export const minutesToTime = (minutes: number) => {
   const mins = (minutes % slotDuration).toString().padStart(2, "0");
   return `${hours}:${mins}`;
 };
-
-export const SlotSearchableFields = ["date", "room"];

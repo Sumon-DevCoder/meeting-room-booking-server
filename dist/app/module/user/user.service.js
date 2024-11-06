@@ -45,10 +45,9 @@ const updateUserIntoDB = (_id, payload) => __awaiter(void 0, void 0, void 0, fun
     if (!isUserExists) {
         throw new AppError_1.default(http_status_1.default.CONFLICT, "User not found!");
     }
-    const result = yield user_model_1.User.findByIdAndUpdate(_id, payload, {
+    const result = yield user_model_1.User.findByIdAndUpdate({ _id }, payload, {
         new: true,
     });
-    console.log(result);
     return result;
 });
 exports.UserServices = {

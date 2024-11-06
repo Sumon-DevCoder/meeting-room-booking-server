@@ -11,13 +11,6 @@ exports.createSlotSchemaValidation = zod_1.z.object({
         startTime: zod_1.z.string({
             required_error: "Start time is required",
         }),
-        roomName: zod_1.z.string({
-            required_error: "Room name is required",
-        }),
-        isDeleted: zod_1.z.boolean().optional(),
-        roomNo: zod_1.z.number({
-            required_error: "Room number is required",
-        }),
         endTime: zod_1.z.string({
             required_error: "End time is required",
         }),
@@ -26,11 +19,10 @@ exports.createSlotSchemaValidation = zod_1.z.object({
 });
 exports.updateSlotSchemaValidation = zod_1.z.object({
     body: zod_1.z.object({
-        roomId: zod_1.z.string().optional(), // Assuming room is stored as a UUID
+        roomId: zod_1.z.string().uuid("Invalid Room ID").optional(), // Assuming room is stored as a UUID
         date: zod_1.z.string().optional(),
         startTime: zod_1.z.string().optional(),
         endTime: zod_1.z.string().optional(),
-        isDeleted: zod_1.z.boolean().optional(),
         isBooked: zod_1.z.boolean().optional(),
     }),
 });

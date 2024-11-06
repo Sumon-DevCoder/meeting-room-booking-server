@@ -35,7 +35,7 @@ const RoomSchema = new mongoose_1.Schema({
     roomNo: {
         type: Number,
         required: [true, "Room Number is Required"],
-        // unique: true,
+        unique: true,
     },
     floorNo: {
         type: Number,
@@ -58,10 +58,6 @@ const RoomSchema = new mongoose_1.Schema({
     isDeleted: {
         type: Boolean,
         default: false,
-    },
-    img: {
-        type: [String],
-        required: true,
     },
 });
 (0, queryMiddlewareChecking_1.queryMiddlewareChecking)(RoomSchema, "isDeleted", true);

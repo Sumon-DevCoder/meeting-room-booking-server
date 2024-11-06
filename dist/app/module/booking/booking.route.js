@@ -15,8 +15,6 @@ const router = (0, express_1.Router)();
 router.post("/", (0, validateRequest_1.default)(booking_validation_1.bookingValidationSchema.createBookingValidationSchema), (0, auth_1.auth)(user_constant_1.USER_ROLE.user, user_constant_1.USER_ROLE.admin), booking_controller_1.BookingControllers.createBooking);
 // get all
 router.get("/", (0, auth_1.auth)(user_constant_1.USER_ROLE.admin), booking_controller_1.BookingControllers.getAllBookings);
-// get booking user specific
-router.get("/:userEmail", (0, auth_1.auth)(user_constant_1.USER_ROLE.admin, user_constant_1.USER_ROLE.user), booking_controller_1.BookingControllers.getBookingByUser);
 // update
 router.put("/:bookingId", (0, auth_1.auth)(user_constant_1.USER_ROLE.admin), booking_controller_1.BookingControllers.updateBooking);
 // delete

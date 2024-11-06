@@ -21,11 +21,9 @@ const room_constant_1 = require("./room.constant");
 // create
 const createRoomIntoDB = (payload) => __awaiter(void 0, void 0, void 0, function* () {
     // room checking
-    const isRoomExists = yield room_model_1.Room.findOne({
-        roomNo: payload.roomNo,
-    });
+    const isRoomExists = yield room_model_1.Room.findOne({ roomNo: payload.roomNo });
     if (isRoomExists) {
-        throw new AppError_1.default(http_status_1.default.CONFLICT, "Room already exists");
+        throw new AppError_1.default(http_status_1.default.CONFLICT, "Room with this room number already exists");
     }
     const result = yield room_model_1.Room.create(payload);
     return result;

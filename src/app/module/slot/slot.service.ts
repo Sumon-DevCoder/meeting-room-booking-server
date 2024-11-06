@@ -2,12 +2,7 @@ import httpStatus from "http-status";
 import AppError from "../../error/AppError";
 import { TSlot } from "./slot.interface";
 import { Slot } from "./slot.model";
-import {
-  minutesToTime,
-  slotDuration,
-  slotSearchableFields,
-  timeToMin,
-} from "./slot.utils";
+import { minutesToTime, slotDuration, timeToMin } from "./slot.utils";
 import QueryBuilder from "../../builder/QueryBuilder";
 
 // create
@@ -55,7 +50,6 @@ const createSlotIntoDB = async (payload: TSlot) => {
 const getAllSlotFromDB = async (query: Record<string, unknown>) => {
   // queryBuilder
   const slotQuery = new QueryBuilder(Slot.find().populate("roomId"), query)
-    .search(slotSearchableFields)
     .filter()
     .sort()
     .paginate()
@@ -75,54 +69,54 @@ const getAllSlotFromDB = async (query: Record<string, unknown>) => {
   };
 };
 
-// // get single
-// const getSingleSlotFromDB = async (_id: string) => {
-//   const result = await Slot.findById({ _id });
+// getSlotByRoomFromDB
+const getSlotByRoomFromDB = async (_id: string) => {
+  const result = await Slot.findOne({ roomId: _id });
 
-//   // checking data
-//   if (result === null) {
-//     throw new AppError(httpStatus.NOT_FOUND, "Slots not found!");
-//   }
+  // checking data
+  if (result === null) {
+    throw new AppError(httpStatus.NOT_FOUND, "Slots not available!");
+  }
 
-//   return result;
-// };
+  return result;
+};
 
-// // update
-// const updateSlotIntoDB = async (_id: string, payload: Partial<TSlot>) => {
-//   // slot checking
-//   const isSlotExists = await Slot.findById({ _id });
-//   if (!isSlotExists) {
-//     throw new AppError(httpStatus.CONFLICT, "Slot not found!");
-//   }
+// update
+const updateSlotIntoDB = async (_id: string, payload: Partial<TSlot>) => {
+  // slot checking
+  const isSlotExists = await Slot.findById({ _id });
+  if (!isSlotExists) {
+    throw new AppError(httpStatus.CONFLICT, "Slot not available!");
+  }
 
-//   const result = await Slot.findByIdAndUpdate({ _id }, payload, {
-//     new: true,
-//   });
-//   return result;
-// };
+  const result = await Slot.findByIdAndUpdate({ _id }, payload, {
+    new: true,
+  });
+  return result;
+};
 
-// // update
-// const deleteSlotIntoDB = async (_id: string) => {
-//   // slot checking
-//   const Slot = await Slot.findById({ _id });
-//   if (!Slot) {
-//     throw new AppError(httpStatus.CONFLICT, "Slot not found!");
-//   }
+// delete
+const deleteSlotIntoDB = async (_id: string) => {
+  // slot checking
+  const SlotData = await Slot.findById({ _id });
+  if (!SlotData) {
+    throw new AppError(httpStatus.CONFLICT, "Slot not available!");
+  }
 
-//   const result = await Slot.findByIdAndUpdate(
-//     _id,
-//     { isDeleted: true },
-//     {
-//       new: true,
-//     }
-//   );
-//   return result;
-// };
+  const result = await Slot.findByIdAndUpdate(
+    _id,
+    { isDeleted: true },
+    {
+      new: true,
+    }
+  );
+  return result;
+};
 
 export const SlotServices = {
   createSlotIntoDB,
-  //   getSingleSlotFromDB,
+  getSlotByRoomFromDB,
   getAllSlotFromDB,
-  //   updateSlotIntoDB,
-  //   deleteSlotIntoDB,
+  updateSlotIntoDB,
+  deleteSlotIntoDB,
 };
