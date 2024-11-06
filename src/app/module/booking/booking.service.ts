@@ -63,7 +63,10 @@ const getAllBookingFromDB = async (query: Record<string, unknown>) => {
 
 // get booking by user
 const getBookingByUserFromDB = async (email: string) => {
-  const result = await Booking.find({ email: email });
+  console.log("e", email);
+  const result = await Booking.find({ email: email })
+    .populate("room")
+    .populate("user");
 
   // checking data
   if (result === null) {

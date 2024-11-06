@@ -11,6 +11,7 @@ export type TBooking = {
   slots: Types.ObjectId[]; // ref
   room: Types.ObjectId; // ref
   user: Types.ObjectId; // ref
+  email: string;
   totalAmount: number;
   isConfirmed: BookingStatus;
   isDeleted: boolean;

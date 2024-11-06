@@ -11,17 +11,21 @@ const router = Router();
 router.post(
   "/",
   validateRequest(bookingValidationSchema.createBookingValidationSchema),
-  auth(USER_ROLE.user, USER_ROLE.admin),
+  // auth(USER_ROLE.user, USER_ROLE.admin),
   BookingControllers.createBooking
 );
 
 // get all
-router.get("/", auth(USER_ROLE.admin), BookingControllers.getAllBookings);
+router.get(
+  "/",
+  // auth(USER_ROLE.admin, USER_ROLE.user),
+  BookingControllers.getAllBookings
+);
 
 // get booking by user
 router.get(
   "/:email",
-  auth(USER_ROLE.admin, USER_ROLE.user),
+  // auth(USER_ROLE.admin, USER_ROLE.user),
   BookingControllers.getBookingByUser
 );
 
@@ -36,7 +40,7 @@ router.put(
 // delete
 router.delete(
   "/:bookingId",
-  auth(USER_ROLE.admin),
+  auth(USER_ROLE.admin, USER_ROLE.user),
   BookingControllers.deleteBooking
 );
 

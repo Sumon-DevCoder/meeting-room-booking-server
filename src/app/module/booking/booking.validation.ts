@@ -11,6 +11,7 @@ export const createBookingValidationSchema = z.object({
       message: "At least one slot is required",
     }), // At least one slot required
     room: z.string(),
+    email: z.string(),
     user: z.string(),
     totalAmount: z
       .number({

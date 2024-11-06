@@ -25,6 +25,10 @@ const bookingSchema: Schema = new Schema<TBooking>(
       ref: "User", // Reference to the User model
       required: true,
     },
+    email: {
+      type: String,
+      required: true,
+    },
     totalAmount: {
       type: Number,
       required: true,
