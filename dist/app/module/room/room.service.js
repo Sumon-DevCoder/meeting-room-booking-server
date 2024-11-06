@@ -20,10 +20,12 @@ const QueryBuilder_1 = __importDefault(require("../../builder/QueryBuilder"));
 const room_constant_1 = require("./room.constant");
 // create
 const createRoomIntoDB = (payload) => __awaiter(void 0, void 0, void 0, function* () {
-    // user checking
-    const isRoomExists = yield room_model_1.Room.findOne({ roomNo: payload.roomNo });
+    // room checking
+    const isRoomExists = yield room_model_1.Room.findOne({
+        roomNo: payload.roomNo,
+    });
     if (isRoomExists) {
-        throw new AppError_1.default(http_status_1.default.CONFLICT, "Room with this room number already exists");
+        throw new AppError_1.default(http_status_1.default.CONFLICT, "Room already exists");
     }
     const result = yield room_model_1.Room.create(payload);
     return result;
@@ -31,14 +33,14 @@ const createRoomIntoDB = (payload) => __awaiter(void 0, void 0, void 0, function
 // get all
 const getAllRoomFromDB = (query) => __awaiter(void 0, void 0, void 0, function* () {
     // queryBuilder
-    const userQuery = new QueryBuilder_1.default(room_model_1.Room.find(), query)
+    const roomQuery = new QueryBuilder_1.default(room_model_1.Room.find(), query)
         .search(room_constant_1.roomSearchableFields)
         .filter()
         .sort()
         .paginate()
         .fields();
-    const meta = yield userQuery.countTotal();
-    const result = yield userQuery.modelQuery;
+    const meta = yield roomQuery.countTotal();
+    const result = yield roomQuery.modelQuery;
     // checking data
     if (result.length === 0) {
         throw new AppError_1.default(http_status_1.default.NOT_FOUND, "rooms not found!");
@@ -51,7 +53,6 @@ const getAllRoomFromDB = (query) => __awaiter(void 0, void 0, void 0, function* 
 // get single
 const getSingleRoomFromDB = (_id) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield room_model_1.Room.findById({ _id });
-    console.log("single result", result);
     // checking data
     if (result === null) {
         throw new AppError_1.default(http_status_1.default.NOT_FOUND, "rooms not found!");
@@ -60,7 +61,7 @@ const getSingleRoomFromDB = (_id) => __awaiter(void 0, void 0, void 0, function*
 });
 // update
 const updateRoomIntoDB = (_id, payload) => __awaiter(void 0, void 0, void 0, function* () {
-    // user checking
+    // room checking
     const isRoomExists = yield room_model_1.Room.findById({ _id });
     if (!isRoomExists) {
         throw new AppError_1.default(http_status_1.default.CONFLICT, "Room not found!");
@@ -70,9 +71,22 @@ const updateRoomIntoDB = (_id, payload) => __awaiter(void 0, void 0, void 0, fun
     });
     return result;
 });
+// update
+const deleteRoomIntoDB = (_id) => __awaiter(void 0, void 0, void 0, function* () {
+    // room checking
+    const room = yield room_model_1.Room.findById({ _id });
+    if (!room) {
+        throw new AppError_1.default(http_status_1.default.CONFLICT, "Room not found!");
+    }
+    const result = yield room_model_1.Room.findByIdAndUpdate(_id, { isDeleted: true }, {
+        new: true,
+    });
+    return result;
+});
 exports.RoomServices = {
     createRoomIntoDB,
     getSingleRoomFromDB,
     getAllRoomFromDB,
     updateRoomIntoDB,
+    deleteRoomIntoDB,
 };

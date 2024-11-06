@@ -22,6 +22,7 @@ exports.createUserValidationSchema = zod_1.z.object({
             .string()
             .min(6, "password must be at least 6 characters")
             .min(1, "password is required"),
+        img: zod_1.z.string().min(1, "img is required"),
         status: zod_1.z
             .enum([user_constant_1.USER_STATUS.active, user_constant_1.USER_STATUS.blocked], {
             required_error: "status is required",
@@ -41,10 +42,8 @@ exports.updateUserValidationSchema = zod_1.z.object({
         email: zod_1.z.string().email("Invalid email address").trim().optional(), // Optional for updates
         phone: zod_1.z.number().min(1, "Phone number is required").optional(),
         address: zod_1.z.string().min(1, "address is required").optional(),
-        password: zod_1.z
-            .string()
-            .min(6, "password must be at least 6 characters")
-            .optional(), // Optional for updates
+        password: zod_1.z.string().optional(), // Optional for updates
+        img: zod_1.z.string().optional(), // Optional for updates
         status: zod_1.z
             .enum([user_constant_1.USER_STATUS.active, user_constant_1.USER_STATUS.blocked], {
             required_error: "status is required",

@@ -1,54 +1,115 @@
 "use strict";
-// import httpStatus from "http-status";
-// import { TUser } from "./room.interface";
-// import AppError from "../../error/AppError";
-// import QueryBuilder from "../../builder/QueryBuilder";
-// import { userSearchableFields } from "./room.constant";
-// import { User } from "./room.model";
-// // create
-// const creatAdminIntoDB = async (payload: TUser) => {
-//   // user checking
-//   const isUserExists = await User.findOne({ email: payload.email });
-//   if (isUserExists) {
-//     throw new AppError(httpStatus.CONFLICT, "Already registered");
-//   }
-//   const result = await User.create(payload);
-//   return result;
-// };
-// // get all
-// const getAllUsersFromDB = async (query: Record<string, unknown>) => {
-//   // queryBuilder
-//   const userQuery = new QueryBuilder(User.find(), query)
-//     .search(userSearchableFields)
-//     .filter()
-//     .sort()
-//     .paginate()
-//     .fields();
-//   const meta = await userQuery.countTotal();
-//   const result = await userQuery.modelQuery;
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.BookingServices = void 0;
+const http_status_1 = __importDefault(require("http-status"));
+const AppError_1 = __importDefault(require("../../error/AppError"));
+const booking_interface_1 = require("./booking.interface");
+const booking_model_1 = require("./booking.model");
+const QueryBuilder_1 = __importDefault(require("../../builder/QueryBuilder"));
+const booking_constant_1 = require("./booking.constant");
+const room_model_1 = require("../room/room.model");
+// create
+const createBookingIntoDB = (payload) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a;
+    // get room data base on payload
+    const room = yield room_model_1.Room.findById(payload.room);
+    const roomPricePerSlot = room === null || room === void 0 ? void 0 : room.pricePerSlot;
+    const totalSlot = (_a = payload === null || payload === void 0 ? void 0 : payload.slots) === null || _a === void 0 ? void 0 : _a.length;
+    // set total price of room slots
+    const totalAmount = roomPricePerSlot * totalSlot;
+    payload.totalAmount = totalAmount;
+    // find Booking is Exists
+    const BookingIsExists = yield booking_model_1.Booking.findOne({
+        date: payload.date,
+        room: payload.room,
+        slots: { $in: payload.slots },
+        user: payload.user,
+    });
+    if (BookingIsExists) {
+        throw new AppError_1.default(http_status_1.default.CONFLICT, "Already booked");
+    }
+    const result = yield booking_model_1.Booking.create(payload);
+    return result;
+});
+// get all
+const getAllBookingFromDB = (query) => __awaiter(void 0, void 0, void 0, function* () {
+    // queryBuilder
+    const BookingQuery = new QueryBuilder_1.default(booking_model_1.Booking.find().populate("slots").populate("room").populate("user"), query)
+        .search(booking_constant_1.bookingSearchableFields)
+        .filter()
+        .sort()
+        .paginate()
+        .fields();
+    const meta = yield BookingQuery.countTotal();
+    const result = yield BookingQuery.modelQuery;
+    // checking data
+    if (result.length === 0) {
+        throw new AppError_1.default(http_status_1.default.NOT_FOUND, "Bookings not available!");
+    }
+    return {
+        meta,
+        result,
+    };
+});
+// get all
+const getBookingByUserFromDB = (email) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield booking_model_1.Booking.find({ email })
+        .populate("room")
+        .populate("user")
+        .populate("slots");
+    return result;
+});
+// // get single
+// const getSingleBookingFromDB = async (_id: string) => {
+//   const result = await Booking.findById({ _id });
 //   // checking data
-//   if (result.length === 0) {
-//     throw new AppError(httpStatus.NOT_FOUND, "data not found!");
+//   if (result === null) {
+//     throw new AppError(httpStatus.NOT_FOUND, "Bookings not found!");
 //   }
-//   return {
-//     meta,
-//     result,
-//   };
-// };
-// // update
-// const updateUserIntoDB = async (_id: string, payload: Partial<TUser>) => {
-//   // user checking
-//   const isUserExists = await User.findOne({ _id });
-//   if (!isUserExists) {
-//     throw new AppError(httpStatus.CONFLICT, "User not found!");
-//   }
-//   const result = await User.findByIdAndUpdate({ _id }, payload, {
-//     new: true,
-//   });
 //   return result;
 // };
-// export const UserServices = {
-//   creatAdminIntoDB,
-//   updateUserIntoDB,
-//   getAllUsersFromDB,
-// };
+// update
+const updateBookingIntoDB = (_id) => __awaiter(void 0, void 0, void 0, function* () {
+    // Booking checking
+    const isBookingExists = yield booking_model_1.Booking.findById({ _id });
+    if (!isBookingExists) {
+        throw new AppError_1.default(http_status_1.default.NOT_FOUND, "Booking not found!");
+    }
+    //   console.log("id", _id);
+    //   console.log("hitting server");
+    const result = yield booking_model_1.Booking.findByIdAndUpdate(_id, { isConfirmed: booking_interface_1.BookingStatus.confirmed }, {
+        new: true,
+    });
+    return result;
+});
+// delete
+const deleteBookingIntoDB = (_id) => __awaiter(void 0, void 0, void 0, function* () {
+    // Booking checking
+    const booking = yield booking_model_1.Booking.findById({ _id });
+    if (!booking) {
+        throw new AppError_1.default(http_status_1.default.CONFLICT, "Booking not found!");
+    }
+    const result = yield booking_model_1.Booking.findByIdAndUpdate(_id, { isDeleted: true }, {
+        new: true,
+    });
+    return result;
+});
+exports.BookingServices = {
+    createBookingIntoDB,
+    getBookingByUserFromDB,
+    getAllBookingFromDB,
+    updateBookingIntoDB,
+    deleteBookingIntoDB,
+};

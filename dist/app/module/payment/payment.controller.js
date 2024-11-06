@@ -12,33 +12,21 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UserControllers = void 0;
-const http_status_1 = __importDefault(require("http-status"));
-const user_service_1 = require("./user.service");
+exports.PaymentControllers = void 0;
 const catchAsync_1 = __importDefault(require("../../utiils/catchAsync"));
+const payment_service_1 = require("./payment.service");
 const sendResponse_1 = __importDefault(require("../../utiils/sendResponse"));
-// get all
-const getAllUsers = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield user_service_1.UserServices.getAllUsersFromDB(req.query);
+const http_status_1 = __importDefault(require("http-status"));
+const getPaymentByUser = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { userEmail } = req.params;
+    const result = yield payment_service_1.PaymentServices.getPaymentByUserFromDB(userEmail);
     (0, sendResponse_1.default)(res, {
         statusCode: http_status_1.default.OK,
         success: true,
-        message: "Admin Data fetched successfully",
+        message: "Payment retrieved successfully",
         data: result,
     });
 }));
-// update
-const updateUser = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { userId } = req.params;
-    const result = yield user_service_1.UserServices.updateUserIntoDB(userId, req.body);
-    (0, sendResponse_1.default)(res, {
-        statusCode: http_status_1.default.OK,
-        success: true,
-        message: "User updated successfully",
-        data: result,
-    });
-}));
-exports.UserControllers = {
-    getAllUsers,
-    updateUser,
+exports.PaymentControllers = {
+    getPaymentByUser,
 };

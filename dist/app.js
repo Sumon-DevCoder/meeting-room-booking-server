@@ -10,8 +10,23 @@ const routes_1 = __importDefault(require("./app/routes"));
 const globalErrorhandler_1 = __importDefault(require("./app/middlewares/globalErrorhandler"));
 const notFound_1 = __importDefault(require("./app/middlewares/notFound"));
 // parser
-app.use((0, cors_1.default)());
 app.use(express_1.default.json());
+// app.use(express.urlencoded());
+// app.use(
+//   cors({
+//     origin: [
+//       "https://meeting-room-booking-client-ochre.vercel.app",
+//       "http://localhost:5173",
+//     ],
+//     credentials: true,
+//   })
+// );
+app.use((0, cors_1.default)({
+    origin: true,
+    credentials: true,
+    methods: ["GET", "POST", "PATCH", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization", "Origin", "Accept"],
+}));
 // application route
 app.use("/api", routes_1.default);
 // route

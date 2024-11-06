@@ -1,36 +1,26 @@
 "use strict";
-// import { Router } from "express";
-// import validateRequest from "../../middlewares/validateRequest";
-// import { userSchemaValidation } from "./room.validation";
-// import { UserControllers } from "./room.controller";
-// import { USER_ROLE } from "./room.constant";
-// import { auth } from "../../middlewares/auth";
-// const router = Router();
-// // create admin
-// router.post(
-//   "/create-admin",
-//   validateRequest(userSchemaValidation.createUserValidationSchema),
-//   auth(USER_ROLE.ADMIN, USER_ROLE.SUPER_ADMIN),
-//   UserControllers.createAdmin
-// );
-// // get all admin
-// router.get(
-//   "/",
-//   auth(USER_ROLE.ADMIN, USER_ROLE.SUPER_ADMIN),
-//   UserControllers.getAllUsers
-// );
-// // update user
-// router.put(
-//   "/:userId",
-//   validateRequest(userSchemaValidation.updateUserValidationSchema),
-//   auth(USER_ROLE.ADMIN, USER_ROLE.SUPER_ADMIN),
-//   UserControllers.updateUser
-// );
-// // update only user own profile
-// router.put(
-//   "/me",
-//   validateRequest(userSchemaValidation.updateUserValidationSchema),
-//   auth(USER_ROLE.ADMIN, USER_ROLE.SUPER_ADMIN, USER_ROLE.USER),
-//   UserControllers.updateUser
-// );
-// export const UserRoutes = router;
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.slotRoutes = void 0;
+const express_1 = require("express");
+const validateRequest_1 = __importDefault(require("../../middlewares/validateRequest"));
+const auth_1 = require("../../middlewares/auth");
+const slot_validation_1 = require("./slot.validation");
+const user_constant_1 = require("../user/user.constant");
+const slot_controller_1 = require("./slot.controller");
+const router = (0, express_1.Router)();
+// create
+router.post("/", (0, validateRequest_1.default)(slot_validation_1.slotValidationSchema.createSlotSchemaValidation), (0, auth_1.auth)(user_constant_1.USER_ROLE.admin), slot_controller_1.SlotControllers.createSlot);
+// get all
+router.get("/availability", slot_controller_1.SlotControllers.getAllSlots);
+// get single slots
+router.get("/:slotsId", slot_controller_1.SlotControllers.getSingleSlotsById);
+// getSlotByRoom;
+router.get("/room/:roomId", slot_controller_1.SlotControllers.getSlotByRoom);
+// update
+router.put("/:id", (0, validateRequest_1.default)(slot_validation_1.slotValidationSchema.updateSlotSchemaValidation), (0, auth_1.auth)(user_constant_1.USER_ROLE.admin), slot_controller_1.SlotControllers.updateSlot);
+// delete
+router.delete("/:slotId", (0, auth_1.auth)(user_constant_1.USER_ROLE.admin), slot_controller_1.SlotControllers.deleteSlot);
+exports.slotRoutes = router;

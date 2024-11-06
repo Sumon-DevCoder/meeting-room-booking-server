@@ -48,7 +48,7 @@ const login = (payload) => __awaiter(void 0, void 0, void 0, function* () {
     // checking user
     const user = yield user_model_1.User.findOne({ email: payload.email }).select("+password");
     if (!user) {
-        throw new Error("User not found!");
+        throw new Error("Email Address is not registered. Please check and try again");
     }
     // checking user status
     if (user.status === "blocked") {

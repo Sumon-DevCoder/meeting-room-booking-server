@@ -17,11 +17,8 @@ router.post("/", (0, validateRequest_1.default)(room_validation_1.roomSchemaVali
 router.get("/", room_controller_1.RoomControllers.getAllRooms);
 // get single
 router.get("/:roomId", room_controller_1.RoomControllers.getSingleRooms);
-// // update only user own profile
-// router.put(
-//   "/me",
-//   validateRequest(userSchemaValidation.updateUserValidationSchema),
-//   auth(USER_ROLE.ADMIN, USER_ROLE.SUPER_ADMIN, USER_ROLE.USER),
-//   UserControllers.updateUser
-// );
+// update
+router.put("/:roomId", (0, validateRequest_1.default)(room_validation_1.roomSchemaValidation.updateRoomSchemaValidation), (0, auth_1.auth)(user_constant_1.USER_ROLE.admin), room_controller_1.RoomControllers.updateRoom);
+// delete
+router.delete("/:roomId", (0, auth_1.auth)(user_constant_1.USER_ROLE.admin), room_controller_1.RoomControllers.deleteRoom);
 exports.RoomRoutes = router;

@@ -25,22 +25,41 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Slot = void 0;
 const mongoose_1 = __importStar(require("mongoose"));
+const queryMiddlewareChecking_1 = require("../../utiils/queryMiddlewareChecking");
 const SlotSchema = new mongoose_1.Schema({
-    room: {
-        type: mongoose_1.default.Schema.Types.ObjectId,
+    roomId: {
+        type: mongoose_1.Schema.Types.ObjectId,
         ref: "Room", // Reference to the Room model
         required: true,
     },
     date: {
         type: Date,
         required: true,
+        validate: {
+            validator: function (value) {
+                const today = new Date();
+                today.setHours(0, 0, 0, 0);
+                return value >= today;
+            },
+            message: "Date must be present or future.",
+        },
     },
     startTime: {
-        type: Date,
+        type: String,
         required: true,
     },
+    isDeleted: {
+        type: Boolean,
+        default: false,
+    },
+    roomName: {
+        type: String,
+    },
+    roomNo: {
+        type: Number,
+    },
     endTime: {
-        type: Date,
+        type: String,
         required: true,
     },
     isBooked: {
@@ -50,5 +69,6 @@ const SlotSchema = new mongoose_1.Schema({
 }, {
     timestamps: true, // Automatically add createdAt and updatedAt fields
 });
+(0, queryMiddlewareChecking_1.queryMiddlewareChecking)(SlotSchema, "isDeleted", true);
 // Create and export the Slot model
 exports.Slot = mongoose_1.default.model("Slot", SlotSchema);

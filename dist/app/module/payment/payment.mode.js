@@ -23,46 +23,41 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Room = void 0;
 const mongoose_1 = __importStar(require("mongoose"));
-const queryMiddlewareChecking_1 = require("../../utiils/queryMiddlewareChecking");
-const RoomSchema = new mongoose_1.Schema({
-    name: {
+const PaymentSchema = new mongoose_1.Schema({
+    amount: {
+        type: Number,
+    },
+    currency: {
         type: String,
-        required: [true, "Room Name is Required"],
-        trim: true,
-    },
-    roomNo: {
-        type: Number,
-        required: [true, "Room Number is Required"],
-        // unique: true,
-    },
-    floorNo: {
-        type: Number,
-        required: [true, "Floor Number is Required"],
-    },
-    capacity: {
-        type: Number,
         required: true,
-        min: 1,
+        default: "BDT",
     },
-    pricePerSlot: {
-        type: Number,
+    order_id: {
+        type: String,
         required: true,
-        min: 0,
+        //   ref: "Order Id",
     },
-    amenities: {
-        type: [String],
+    tran_id: { type: String, required: true },
+    cus_name: {
+        type: String,
         required: true,
     },
-    isDeleted: {
-        type: Boolean,
-        default: false,
-    },
-    img: {
-        type: [String],
+    cus_email: {
+        type: String,
         required: true,
     },
+    status: {
+        type: String,
+        default: "pending",
+    },
+    cus_phone: {
+        type: String,
+        required: true,
+    },
+}, {
+    timestamps: true,
 });
-(0, queryMiddlewareChecking_1.queryMiddlewareChecking)(RoomSchema, "isDeleted", true);
-exports.Room = mongoose_1.default.model("Room", RoomSchema);
+// Create and export the Payment model
+const Payment = mongoose_1.default.model("Payment", PaymentSchema);
+exports.default = Payment;

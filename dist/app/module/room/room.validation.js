@@ -23,6 +23,7 @@ exports.createRoomSchemaValidation = zod_1.z.object({
             .min(0, "Price per slot cannot be negative"),
         amenities: zod_1.z.array(zod_1.z.string()).min(1, "At least one amenity is required"),
         isDeleted: zod_1.z.boolean().optional(),
+        img: zod_1.z.array(zod_1.z.string()).min(3, "At least 3 img is required"),
     }),
 });
 exports.updateRoomSchemaValidation = zod_1.z.object({
@@ -55,6 +56,7 @@ exports.updateRoomSchemaValidation = zod_1.z.object({
             .min(1, "At least one amenity is required")
             .optional(),
         isDeleted: zod_1.z.boolean().optional(),
+        img: zod_1.z.array(zod_1.z.string()).min(3, "At least 3 img is required").optional(),
     }),
 });
 exports.roomSchemaValidation = {

@@ -47,20 +47,29 @@ const getSingleRooms = (0, catchAsync_1.default)((req, res) => __awaiter(void 0,
         data: result,
     });
 }));
-// // update
-// const updateUser = catchAsync(async (req: Request, res: Response) => {
-//   const result = await UserServices.updateUserIntoDB(
-//     req.params.userId,
-//     req.body
-//   );
-//   sendResponse(res, {
-//     statusCode: httpStatus.OK,
-//     success: true,
-//     message: "User updated successfully",
-//     data: result,
-//   });
-// });
+// update
+const updateRoom = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield room_service_1.RoomServices.updateRoomIntoDB(req.params.roomId, req.body);
+    (0, sendResponse_1.default)(res, {
+        statusCode: http_status_1.default.OK,
+        success: true,
+        message: "Room updated successfully",
+        data: result,
+    });
+}));
+// delete
+const deleteRoom = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield room_service_1.RoomServices.deleteRoomIntoDB(req.params.roomId);
+    (0, sendResponse_1.default)(res, {
+        statusCode: http_status_1.default.OK,
+        success: true,
+        message: "Room deleted successfully",
+        data: result,
+    });
+}));
 exports.RoomControllers = {
+    deleteRoom,
+    updateRoom,
     createRoom,
     getAllRooms,
     getSingleRooms,
