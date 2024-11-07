@@ -26,6 +26,10 @@ const bookingSchema = new mongoose_1.Schema({
         ref: "User", // Reference to the User model
         required: true,
     },
+    email: {
+        type: String,
+        required: true,
+    },
     totalAmount: {
         type: Number,
         required: true,

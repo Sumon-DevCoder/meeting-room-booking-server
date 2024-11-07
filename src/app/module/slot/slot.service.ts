@@ -97,19 +97,17 @@ const updateSlotIntoDB = async (_id: string, payload: Partial<TSlot>) => {
 
 // delete
 const deleteSlotIntoDB = async (_id: string) => {
+  console.log(_id);
+
   // slot checking
   const SlotData = await Slot.findById({ _id });
   if (!SlotData) {
     throw new AppError(httpStatus.CONFLICT, "Slot not available!");
   }
 
-  const result = await Slot.findByIdAndUpdate(
-    _id,
-    { isDeleted: true },
-    {
-      new: true,
-    }
-  );
+  const result = await Slot.findByIdAndDelete(_id, {
+    new: true,
+  });
   return result;
 };
 

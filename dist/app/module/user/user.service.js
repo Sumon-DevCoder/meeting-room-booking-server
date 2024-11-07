@@ -50,7 +50,20 @@ const updateUserIntoDB = (_id, payload) => __awaiter(void 0, void 0, void 0, fun
     });
     return result;
 });
+// delete
+const deleteUserIntoDB = (_id) => __awaiter(void 0, void 0, void 0, function* () {
+    // user checking
+    const isUserExists = yield user_model_1.User.findOne({ _id });
+    if (!isUserExists) {
+        throw new AppError_1.default(http_status_1.default.CONFLICT, "User not found!");
+    }
+    const result = yield user_model_1.User.findByIdAndDelete({ _id }, {
+        new: true,
+    });
+    return result;
+});
 exports.UserServices = {
     updateUserIntoDB,
     getAllUsersFromDB,
+    deleteUserIntoDB,
 };

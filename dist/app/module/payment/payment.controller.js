@@ -8,25 +8,15 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.PaymentControllers = void 0;
-const catchAsync_1 = __importDefault(require("../../utiils/catchAsync"));
+exports.paymentControler = void 0;
 const payment_service_1 = require("./payment.service");
-const sendResponse_1 = __importDefault(require("../../utiils/sendResponse"));
-const http_status_1 = __importDefault(require("http-status"));
-const getPaymentByUser = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { userEmail } = req.params;
-    const result = yield payment_service_1.PaymentServices.getPaymentByUserFromDB(userEmail);
-    (0, sendResponse_1.default)(res, {
-        statusCode: http_status_1.default.OK,
-        success: true,
-        message: "Payment retrieved successfully",
-        data: result,
-    });
-}));
-exports.PaymentControllers = {
-    getPaymentByUser,
+const confirmationController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { transactionId, status } = req.query;
+    console.log("req.query", req.query);
+    const result = yield payment_service_1.paymentServices.confirmationService(transactionId, status);
+    res.send(result);
+});
+exports.paymentControler = {
+    confirmationController,
 };

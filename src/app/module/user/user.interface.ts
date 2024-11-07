@@ -8,4 +8,5 @@ export type TUser = {
   role: keyof typeof USER_ROLE;
   phone: string;
   address: string;
+  img: string;
 };

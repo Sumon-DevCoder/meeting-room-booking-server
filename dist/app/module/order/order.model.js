@@ -23,50 +23,34 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Slot = void 0;
+exports.Order = void 0;
 const mongoose_1 = __importStar(require("mongoose"));
-const queryMiddlewareChecking_1 = require("../../utiils/queryMiddlewareChecking");
-const SlotSchema = new mongoose_1.Schema({
-    roomId: {
-        type: mongoose_1.Schema.Types.ObjectId,
-        ref: "Room", // Reference to the Room model
-        required: true,
+const OrderSchema = new mongoose_1.Schema({
+    user: {
+        name: { type: String, required: true },
+        email: { type: String, required: true },
+        phone: { type: String, required: true },
+        address: { type: String, required: true },
     },
-    date: {
-        type: Date,
-        required: true,
-        validate: {
-            validator: function (value) {
-                const today = new Date();
-                today.setHours(0, 0, 0, 0);
-                return value >= today;
-            },
-            message: "Date must be present or future.",
-        },
-    },
-    startTime: {
-        type: String,
-        required: true,
-    },
-    roomName: {
-        type: String,
-        required: true,
-    },
-    roomNo: {
+    totalPrice: {
         type: Number,
         required: true,
     },
-    endTime: {
+    status: {
+        type: String,
+        enum: ["unconfirmed", "confirmed"],
+        default: "Pending",
+    },
+    paymentStatus: {
+        type: String,
+        enum: ["Pending", "Paid", "Failed"],
+        default: "Pending",
+    },
+    transactionId: {
         type: String,
         required: true,
     },
-    isBooked: {
-        type: Boolean,
-        default: false,
-    },
 }, {
-    timestamps: true, // Automatically add createdAt and updatedAt fields
+    timestamps: true,
 });
-(0, queryMiddlewareChecking_1.queryMiddlewareChecking)(SlotSchema, "isBooked", true);
-// Create and export the Slot model
-exports.Slot = mongoose_1.default.model("Slot", SlotSchema);
+exports.Order = mongoose_1.default.model("Order", OrderSchema);

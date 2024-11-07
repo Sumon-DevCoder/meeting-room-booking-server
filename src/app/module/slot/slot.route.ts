@@ -38,6 +38,6 @@ router.put(
 );
 
 // delete
-router.delete("/:roomId", auth(USER_ROLE.admin), SlotControllers.deleteSlot);
+router.delete("/:slotId", auth(USER_ROLE.admin), SlotControllers.deleteSlot);
 
 export const slotRoutes = router;

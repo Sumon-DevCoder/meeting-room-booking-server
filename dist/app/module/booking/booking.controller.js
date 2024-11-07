@@ -37,19 +37,20 @@ const getAllBookings = (0, catchAsync_1.default)((req, res) => __awaiter(void 0,
         data: result,
     });
 }));
-// // get single
-// const getSingleBookings = catchAsync(async (req: Request, res: Response) => {
-//   const result = await BookingServices.getSingleBookingFromDB(req.params.BookingId);
-//   sendResponse(res, {
-//     statusCode: httpStatus.OK,
-//     success: true,
-//     message: "Booking retrieved successfully",
-//     data: result,
-//   });
-// });
+// get booking by user
+const getBookingByUser = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield booking_service_1.BookingServices.getBookingByUserFromDB(req.params.email);
+    (0, sendResponse_1.default)(res, {
+        statusCode: http_status_1.default.OK,
+        success: true,
+        message: "Booking retrieved successfully",
+        data: result,
+    });
+}));
 // update
 const updateBooking = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield booking_service_1.BookingServices.updateBookingIntoDB(req.params.bookingId);
+    const { bookingId } = req.params;
+    const result = yield booking_service_1.BookingServices.updateBookingIntoDB(bookingId, req.body);
     (0, sendResponse_1.default)(res, {
         statusCode: http_status_1.default.OK,
         success: true,
@@ -72,5 +73,6 @@ exports.BookingControllers = {
     deleteBooking,
     updateBooking,
     getAllBookings,
+    getBookingByUser,
     //   getSingleBookings,
 };

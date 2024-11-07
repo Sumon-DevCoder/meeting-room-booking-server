@@ -13,6 +13,7 @@ exports.createBookingValidationSchema = zod_1.z.object({
             message: "At least one slot is required",
         }), // At least one slot required
         room: zod_1.z.string(),
+        email: zod_1.z.string(),
         user: zod_1.z.string(),
         totalAmount: zod_1.z
             .number({

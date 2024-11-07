@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { StatusCodes } from "http-status-codes";
 import QueryBuilder from "../../builder/QueryBuilder";
 import AppError from "../../error/AppError";
@@ -5,11 +6,18 @@ import { initiatePayment } from "../payment/payment.utils";
 import { IOrder, Order } from "./order.model";
 
 const createOrder = async (orderData: any) => {
-  const { user, products } = orderData;
+  const { user, bookings } = orderData;
 
   const transactionId = `TXN-${Date.now()}`;
-  const totalPrice = products.reduce(
-    (prev: any, current: { price: any }) => prev + current.price,
+  const totalPrice = bookings.reduce(
+    (
+      prev: any,
+      current: {
+        totalAmount: any;
+        totalPrice: any;
+        price: any;
+      }
+    ) => prev + current.totalAmount,
     0
   );
 

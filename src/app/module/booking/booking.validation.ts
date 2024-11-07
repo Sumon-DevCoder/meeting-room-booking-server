@@ -13,15 +13,6 @@ export const createBookingValidationSchema = z.object({
     room: z.string(),
     email: z.string(),
     user: z.string(),
-    totalAmount: z
-      .number({
-        required_error: "Total amount is required",
-        invalid_type_error: "Total amount must be a number",
-      })
-      .positive({
-        message: "Total amount must be a positive number",
-      })
-      .optional(),
     isConfirmed: z
       .enum(["confirmed", "unconfirmed", "canceled"], {
         required_error: "Confirmation status is required",

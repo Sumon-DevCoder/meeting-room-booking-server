@@ -70,10 +70,10 @@ const getAllSlotFromDB = (query) => __awaiter(void 0, void 0, void 0, function* 
 });
 // getSlotByRoomFromDB
 const getSlotByRoomFromDB = (_id) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield slot_model_1.Slot.findOne({ roomId: _id });
+    const result = yield slot_model_1.Slot.find({ roomId: _id });
     // checking data
     if (result === null) {
-        throw new AppError_1.default(http_status_1.default.NOT_FOUND, "Slots not available!");
+        throw new AppError_1.default(http_status_1.default.NOT_FOUND, "Slots not available");
     }
     return result;
 });

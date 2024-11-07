@@ -25,6 +25,14 @@ const SlotSchema: Schema = new Schema<TSlot>(
       type: String,
       required: true,
     },
+    roomName: {
+      type: String,
+      required: true,
+    },
+    roomNo: {
+      type: Number,
+      required: true,
+    },
     endTime: {
       type: String,
       required: true,

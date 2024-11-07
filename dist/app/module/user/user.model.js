@@ -57,6 +57,10 @@ const UserSchema = new mongoose_1.Schema({
         type: "String",
         required: [true, "Address is required"],
     },
+    img: {
+        type: "String",
+        required: [true, "img is required"],
+    },
 }, { timestamps: true });
 // setup password hashing
 UserSchema.pre("save", function (next) {

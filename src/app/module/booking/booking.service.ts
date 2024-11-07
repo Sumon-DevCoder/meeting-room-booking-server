@@ -14,6 +14,8 @@ const createBookingIntoDB = async (payload: TBooking) => {
   const roomPricePerSlot = room?.pricePerSlot;
   const totalSlot = payload?.slots?.length;
 
+  console.log(payload);
+
   // set total price of room slots
   const totalAmount = (roomPricePerSlot as number) * totalSlot;
   payload.totalAmount = totalAmount;

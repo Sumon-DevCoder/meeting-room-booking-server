@@ -6,4 +6,6 @@ export type TSlot = {
   startTime: string;
   endTime: string;
   isBooked: boolean;
+  roomName: string;
+  roomNo: number;
 };

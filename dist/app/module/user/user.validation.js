@@ -41,6 +41,7 @@ exports.updateUserValidationSchema = zod_1.z.object({
         email: zod_1.z.string().email("Invalid email address").trim().optional(), // Optional for updates
         phone: zod_1.z.number().min(1, "Phone number is required").optional(),
         address: zod_1.z.string().min(1, "address is required").optional(),
+        img: zod_1.z.string().min(1, "img is required").optional(),
         password: zod_1.z
             .string()
             .min(6, "password must be at least 6 characters")

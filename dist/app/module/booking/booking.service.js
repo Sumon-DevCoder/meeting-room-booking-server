@@ -15,7 +15,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.BookingServices = void 0;
 const http_status_1 = __importDefault(require("http-status"));
 const AppError_1 = __importDefault(require("../../error/AppError"));
-const booking_interface_1 = require("./booking.interface");
 const booking_model_1 = require("./booking.model");
 const QueryBuilder_1 = __importDefault(require("../../builder/QueryBuilder"));
 const booking_constant_1 = require("./booking.constant");
@@ -63,6 +62,18 @@ const getAllBookingFromDB = (query) => __awaiter(void 0, void 0, void 0, functio
         result,
     };
 });
+// get booking by user
+const getBookingByUserFromDB = (email) => __awaiter(void 0, void 0, void 0, function* () {
+    console.log("e", email);
+    const result = yield booking_model_1.Booking.find({ email: email })
+        .populate("room")
+        .populate("user");
+    // checking data
+    if (result === null) {
+        throw new AppError_1.default(http_status_1.default.NOT_FOUND, "Bookings not available!");
+    }
+    return result;
+});
 // // get single
 // const getSingleBookingFromDB = async (_id: string) => {
 //   const result = await Booking.findById({ _id });
@@ -73,7 +84,7 @@ const getAllBookingFromDB = (query) => __awaiter(void 0, void 0, void 0, functio
 //   return result;
 // };
 // update
-const updateBookingIntoDB = (_id) => __awaiter(void 0, void 0, void 0, function* () {
+const updateBookingIntoDB = (_id, payload) => __awaiter(void 0, void 0, void 0, function* () {
     // Booking checking
     const isBookingExists = yield booking_model_1.Booking.findById({ _id });
     if (!isBookingExists) {
@@ -81,7 +92,7 @@ const updateBookingIntoDB = (_id) => __awaiter(void 0, void 0, void 0, function*
     }
     //   console.log("id", _id);
     //   console.log("hitting server");
-    const result = yield booking_model_1.Booking.findByIdAndUpdate(_id, { isConfirmed: booking_interface_1.BookingStatus.confirmed }, {
+    const result = yield booking_model_1.Booking.findByIdAndUpdate(_id, payload, {
         new: true,
     });
     return result;
@@ -102,6 +113,7 @@ exports.BookingServices = {
     createBookingIntoDB,
     //   getSingleBookingFromDB,
     getAllBookingFromDB,
+    getBookingByUserFromDB,
     updateBookingIntoDB,
     deleteBookingIntoDB,
 };

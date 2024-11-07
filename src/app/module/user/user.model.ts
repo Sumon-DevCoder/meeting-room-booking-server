@@ -45,6 +45,10 @@ const UserSchema = new Schema<TUser>(
       type: "String",
       required: [true, "Address is required"],
     },
+    img: {
+      type: "String",
+      required: [true, "img is required"],
+    },
   },
   { timestamps: true }
 );

@@ -17,4 +17,8 @@ exports.default = {
     jwt_refresh_expires_in: process.env.JWT_REFRESH_EXPIRES_IN,
     SSLCOMMERZ_STORE_ID: process.env.SSLCOMMERZ_STORE_ID,
     SSLCOMMERZ_STORE_PASSWD: process.env.SSLCOMMERZ_STORE_PASSWD,
+    STORE_ID: process.env.STORE_ID,
+    SIGNETURE_KEY: process.env.SIGNETURE_KEY,
+    PAYMENT_URL: process.env.PAYMENT_URL,
+    PAYMENT_VERIFY_URL: process.env.PAYMENT_VERIFY_URL,
 };

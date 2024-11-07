@@ -12,7 +12,7 @@ export type TBooking = {
   room: Types.ObjectId; // ref
   user: Types.ObjectId; // ref
   email: string;
-  totalAmount: number;
+  totalAmount?: number;
   isConfirmed: BookingStatus;
   isDeleted: boolean;
 };
