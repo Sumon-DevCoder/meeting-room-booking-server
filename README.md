@@ -1,4 +1,4 @@
-# **Meeting Room Booking**
+# **Meeting Room Booking - Backend**
 
 A web application for managing room bookings in co-working spaces, featuring user and slot management. This application allows administrators to create and manage meeting rooms and available time slots, while users can easily book rooms based on their preferred times and receive real-time availability updates. The system also includes robust validation and error handling to ensure smooth interactions throughout the booking process.
 
@@ -43,44 +43,52 @@ This project is a web application that allows users to book meeting rooms system
 - **Database:** MongoDB
 - **ODM:** Mongoose
 
-## **Installation**
+## Installation
 
-### **Prerequisites**
-
-Ensure you have the following installed:
-
-- Node.js (v20.17.0)
-- MongoDB
-
-### **Steps**
-
-1. Clone the repository:
+1. **Clone the repository**:
 
    ```bash
    git clone https://github.com/Sumon-DevCoder/meeting-room-booking-server.git
-   cd meeting-room-booking-system
+   ```
+
+2. **Navigate into the project directory**:
+
+   ```bash
+   cd Meeting Room Booking - Backend
 
    ```
 
-2. Install dependencies:
+3. **Install dependencies**:
 
    ```bash
-    npm install
-
+   npm install
    ```
 
-3. Set up environment variables: Create a .env file in the root directory and add the following variables:
+4. **Create a `.env` file in the root directory and add your environment variables**:
 
    ```bash
-   MONGODB_URI=[Your MongoDB connection string]
-   PORT=[Your desired port number]
+   DB_URL=mongodb+srv://<username>:<password>@cluster0.0i0xa.mongodb.net/meetingRoomDB?retryWrites=true&w=majority&appName=Cluster0
+   PORT=5000
+   BCRYPT_SALT_ROUND=12
+   NODE_ENV=development
+   # payment credential (REDACTED)
+   STORE_ID="aamarpaytest"
+   SIGNETURE_KEY="dbb74894e82415a2f7ff0ec3a97e4183"
+   PAYMENT_URL="https://sandbox.aamarpay.com/jsonpost.php"
+   PAYMENT_VERIFY_URL="https://sandbox.aamarpay.com/api/v1/trxcheck/request.php"
+   # admin credentials (REDACTED)
+   admin_email=****\*\*\*****
+   admin_password=****\*\*\*****
+   admin_mobile_number=****\*\*\*****
+   admin_image=****\*\*\*****
+   # jwt credentials (REDACTED)
+   JWT_ACCESS_SECRET=secret
+   JWT_ACCESS_EXPIRES_iN=365d
+   JWT_REFRESH_SECRET=refreshscret
+   JWT_REFRESH_EXPIRES_IN=365d
 
-   ```
-
-4. Run the application:
-
-   ```bash
-   npm run dev
+ 
+   BACKEND_LIVE_URL=https://meeting-room-booking-server-zeta.vercel.app/
    ```
 
 ## Usage
