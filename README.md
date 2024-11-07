@@ -64,7 +64,7 @@ This project is a web application that allows users to book meeting rooms system
    npm install
    ```
 
-4. **Create a `.env.local` file in the root directory and add your environment variables**:
+4. **Create a `.env` file in the root directory and add your environment variables**:
 
    ```bash
    DB_URL=mongodb+srv://<username>:<password>@cluster0.0i0xa.mongodb.net/meetingRoomDB?retryWrites=true&w=majority&appName=Cluster0
