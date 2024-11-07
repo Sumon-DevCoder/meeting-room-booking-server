@@ -97,7 +97,6 @@ const updateSlotIntoDB = async (_id: string, payload: Partial<TSlot>) => {
 
 // delete
 const deleteSlotIntoDB = async (_id: string) => {
-  console.log(_id);
 
   // slot checking
   const SlotData = await Slot.findById({ _id });
