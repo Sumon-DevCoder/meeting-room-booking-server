@@ -70,7 +70,6 @@ This project is a web application that allows users to book meeting rooms system
    DB_URL=mongodb+srv://<username>:<password>@cluster0.0i0xa.mongodb.net/meetingRoomDB?retryWrites=true&w=majority&appName=Cluster0
    PORT=5000
    BCRYPT_SALT_ROUND=12
-   NODE_ENV='development'
    NODE_ENV=development
    # payment credential (REDACTED)
    STORE_ID="aamarpaytest"
