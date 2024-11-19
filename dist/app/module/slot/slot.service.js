@@ -96,7 +96,7 @@ const deleteSlotIntoDB = (_id) => __awaiter(void 0, void 0, void 0, function* ()
     if (!SlotData) {
         throw new AppError_1.default(http_status_1.default.CONFLICT, "Slot not available!");
     }
-    const result = yield slot_model_1.Slot.findByIdAndUpdate(_id, { isDeleted: true }, {
+    const result = yield slot_model_1.Slot.findByIdAndDelete(_id, {
         new: true,
     });
     return result;
