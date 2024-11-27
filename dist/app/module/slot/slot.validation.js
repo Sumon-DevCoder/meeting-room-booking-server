@@ -11,12 +11,6 @@ exports.createSlotSchemaValidation = zod_1.z.object({
         startTime: zod_1.z.string({
             required_error: "Start time is required",
         }),
-        roonName: zod_1.z.string({
-            required_error: "RoomName time is required",
-        }),
-        roomNo: zod_1.z.number({
-            required_error: "RoomNo time is required",
-        }),
         endTime: zod_1.z.string({
             required_error: "End time is required",
         }),

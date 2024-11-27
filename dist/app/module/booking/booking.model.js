@@ -32,7 +32,6 @@ const bookingSchema = new mongoose_1.Schema({
     },
     totalAmount: {
         type: Number,
-        required: true,
         default: 0,
     },
     isConfirmed: {

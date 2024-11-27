@@ -15,15 +15,6 @@ exports.createBookingValidationSchema = zod_1.z.object({
         room: zod_1.z.string(),
         email: zod_1.z.string(),
         user: zod_1.z.string(),
-        totalAmount: zod_1.z
-            .number({
-            required_error: "Total amount is required",
-            invalid_type_error: "Total amount must be a number",
-        })
-            .positive({
-            message: "Total amount must be a positive number",
-        })
-            .optional(),
         isConfirmed: zod_1.z
             .enum(["confirmed", "unconfirmed", "canceled"], {
             required_error: "Confirmation status is required",

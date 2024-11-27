@@ -8,10 +8,13 @@ import { auth } from "../../middlewares/auth";
 const router = Router();
 
 // get all users
+router.get("/", auth(USER_ROLE.admin), UserControllers.getAllUsers);
+
+// get user by email
 router.get(
-  "/",
+  "/:email",
   auth(USER_ROLE.admin, USER_ROLE.user),
-  UserControllers.getAllUsers
+  UserControllers.getUserByEmail
 );
 
 // update user

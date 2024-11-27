@@ -20,5 +20,5 @@ router.get("/room/:roomId", (0, auth_1.auth)(user_constant_1.USER_ROLE.user, use
 // update
 router.put("/:roomId", (0, validateRequest_1.default)(slot_validation_1.slotValidationSchema.updateSlotSchemaValidation), (0, auth_1.auth)(user_constant_1.USER_ROLE.admin), slot_controller_1.SlotControllers.updateSlot);
 // delete
-router.delete("/:roomId", (0, auth_1.auth)(user_constant_1.USER_ROLE.admin), slot_controller_1.SlotControllers.deleteSlot);
+router.delete("/:slotId", (0, auth_1.auth)(user_constant_1.USER_ROLE.admin), slot_controller_1.SlotControllers.deleteSlot);
 exports.slotRoutes = router;
