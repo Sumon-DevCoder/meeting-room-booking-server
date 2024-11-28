@@ -23,7 +23,17 @@ const getAllUsers = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, vo
     (0, sendResponse_1.default)(res, {
         statusCode: http_status_1.default.OK,
         success: true,
-        message: "Admin Data fetched successfully",
+        message: "User Data fetched successfully",
+        data: result,
+    });
+}));
+// get single user
+const getUserByEmail = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield user_service_1.UserServices.getUserByEmailFromDB(req.params.email);
+    (0, sendResponse_1.default)(res, {
+        statusCode: http_status_1.default.OK,
+        success: true,
+        message: "User Data fetched successfully",
         data: result,
     });
 }));
@@ -51,4 +61,5 @@ exports.UserControllers = {
     getAllUsers,
     updateUser,
     deleteUser,
+    getUserByEmail,
 };
