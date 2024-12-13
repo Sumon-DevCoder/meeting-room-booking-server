@@ -60,7 +60,7 @@ const getAllSlotFromDB = async (query: Record<string, unknown>) => {
 
   // checking data
   if (result.length === 0) {
-    throw new AppError(httpStatus.NOT_FOUND, "Slots not found!");
+    throw new AppError(httpStatus.NOT_FOUND, "Slots not Exists!");
   }
 
   return {
@@ -97,7 +97,6 @@ const updateSlotIntoDB = async (_id: string, payload: Partial<TSlot>) => {
 
 // delete
 const deleteSlotIntoDB = async (_id: string) => {
-
   // slot checking
   const SlotData = await Slot.findById({ _id });
   if (!SlotData) {

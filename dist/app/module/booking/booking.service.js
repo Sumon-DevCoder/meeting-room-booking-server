@@ -26,7 +26,6 @@ const createBookingIntoDB = (payload) => __awaiter(void 0, void 0, void 0, funct
     const room = yield room_model_1.Room.findById(payload.room);
     const roomPricePerSlot = room === null || room === void 0 ? void 0 : room.pricePerSlot;
     const totalSlot = (_a = payload === null || payload === void 0 ? void 0 : payload.slots) === null || _a === void 0 ? void 0 : _a.length;
-    console.log(payload);
     // set total price of room slots
     const totalAmount = roomPricePerSlot * totalSlot;
     payload.totalAmount = totalAmount;
@@ -65,7 +64,6 @@ const getAllBookingFromDB = (query) => __awaiter(void 0, void 0, void 0, functio
 });
 // get booking by user
 const getBookingByUserFromDB = (email) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log("e", email);
     const result = yield booking_model_1.Booking.find({ email: email })
         .populate("room")
         .populate("user");

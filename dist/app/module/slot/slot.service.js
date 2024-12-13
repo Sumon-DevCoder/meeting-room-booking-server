@@ -61,7 +61,7 @@ const getAllSlotFromDB = (query) => __awaiter(void 0, void 0, void 0, function* 
     const result = yield slotQuery.modelQuery;
     // checking data
     if (result.length === 0) {
-        throw new AppError_1.default(http_status_1.default.NOT_FOUND, "Slots not found!");
+        throw new AppError_1.default(http_status_1.default.NOT_FOUND, "Slots not Exists!");
     }
     return {
         meta,

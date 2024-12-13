@@ -3,6 +3,10 @@ import { z } from "zod";
 export const createRoomSchemaValidation = z.object({
   body: z.object({
     name: z.string().min(1, "Room Name is Required"),
+    img: z
+      .array(z.string().url({ message: "Each image URL must be a valid URL" }))
+      .optional(),
+    description: z.string().min(1, "Description is Required"),
     roomNo: z.number({
       required_error: "Room Number is Required",
     }),
@@ -27,6 +31,10 @@ export const createRoomSchemaValidation = z.object({
 export const updateRoomSchemaValidation = z.object({
   body: z.object({
     name: z.string().min(1, "Room Name is Required").optional(),
+    img: z
+      .array(z.string().url({ message: "Each image URL must be a valid URL" }))
+      .optional(),
+    description: z.string().min(1, "Description is Required").optional(),
     roomNo: z
       .number({
         required_error: "Room Number is Required",

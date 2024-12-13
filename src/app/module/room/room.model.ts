@@ -8,6 +8,11 @@ const RoomSchema: Schema = new Schema<TRoom>({
     required: [true, "Room Name is Required"],
     trim: true,
   },
+  description: {
+    type: String,
+    required: [true, "Description is Required"],
+  },
+  img: { type: [String], required: false },
   roomNo: {
     type: Number,
     required: [true, "Room Number is Required"],

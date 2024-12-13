@@ -14,8 +14,6 @@ const createBookingIntoDB = async (payload: TBooking) => {
   const roomPricePerSlot = room?.pricePerSlot;
   const totalSlot = payload?.slots?.length;
 
-  console.log(payload);
-
   // set total price of room slots
   const totalAmount = (roomPricePerSlot as number) * totalSlot;
   payload.totalAmount = totalAmount;
@@ -65,7 +63,6 @@ const getAllBookingFromDB = async (query: Record<string, unknown>) => {
 
 // get booking by user
 const getBookingByUserFromDB = async (email: string) => {
-  console.log("e", email);
   const result = await Booking.find({ email: email })
     .populate("room")
     .populate("user");
